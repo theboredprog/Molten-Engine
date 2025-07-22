@@ -40,7 +40,7 @@ private:
     
     MTL::Device* m_MetalDevice;
     
-    CAMetalLayer* m_MetalLayer;
+    CA::MetalLayer* m_MetalLayer;
     
     NSWindow* m_MetalWindow;
     
@@ -63,5 +63,5 @@ public:
     void PrepareRenderingData();
     
     inline MTL::Device* getMetalDevice() { return m_MetalDevice; }
-    inline CAMetalLayer* getMetalLayer() { return m_MetalLayer; }
+    inline CA::MetalLayer* getMetalLayer() { return m_MetalLayer; }
 };

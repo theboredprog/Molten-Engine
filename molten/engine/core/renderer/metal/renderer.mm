@@ -44,7 +44,7 @@ bool Renderer::Init(int width, int height)
         return false;
     }
     
-    m_MetalLayer = [CAMetalLayer layer];
+    m_MetalLayer = CA::MetalLayer::layer();
     if (!m_MetalLayer)
     {
         std::cerr << "[ERROR] Failed to create CAMetalLayer." << std::endl;
@@ -57,19 +57,12 @@ bool Renderer::Init(int width, int height)
         return false;
     }
     
-    m_MetalLayer.device = (__bridge id<MTLDevice>)m_MetalDevice;
-    m_MetalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
-    m_MetalLayer.drawableSize = CGSizeMake(width, height);
-    m_MetalWindow.contentView.wantsLayer = YES;
-    m_MetalWindow.contentView.layer = getMetalLayer();
+    m_MetalLayer->setDevice(m_MetalDevice);
+    m_MetalLayer->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm);
+    m_MetalLayer->setDrawableSize(CGSizeMake(width, height));
     
-    // consider turning this into a more c++ style by doing something like
-    /*
-     CA::MetalLayer* metalLayer = CA::MetalLayer::layer();
-     metalLayer->setDevice(device);
-     metalLayer->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm);
-     metalLayer->setDrawableSize(CGSizeMake(SCR_WIDTH, SCR_HEIGHT));
-     */
+    m_MetalWindow.contentView.wantsLayer = YES;
+    m_MetalWindow.contentView.layer = (__bridge CALayer*)getMetalLayer();
     
     return true;
 }
@@ -97,9 +90,9 @@ void Renderer::PrepareRenderingData()
     
     m_MetalCommandQueue = m_MetalDevice->newCommandQueue();
     
-    MTL::Function* vertexShader = m_MetalDefaultLibrary->newFunction(NS::String::string("vertexShader", NS::ASCIIStringEncoding));
+    auto vertexShader = m_MetalDefaultLibrary->newFunction(NS::String::string("vertexShader", NS::UTF8StringEncoding));
     
-    MTL::Function* fragmentShader = m_MetalDefaultLibrary->newFunction(NS::String::string("fragmentShader", NS::ASCIIStringEncoding));
+    auto fragmentShader = m_MetalDefaultLibrary->newFunction(NS::String::string("fragmentShader", NS::UTF8StringEncoding));
 
     if (!vertexShader || !fragmentShader)
     {
@@ -113,14 +106,15 @@ void Renderer::PrepareRenderingData()
     
     renderPipelineDescriptor->setVertexFunction(vertexShader);
     renderPipelineDescriptor->setFragmentFunction(fragmentShader);
-
+    
     if (!renderPipelineDescriptor)
     {
         std::cerr << "[ERROR] Failed to set the Render Pipeline Descriptor." << std::endl;
         return;
     }
 
-    MTL::PixelFormat pixelFormat = (MTL::PixelFormat)m_MetalLayer.pixelFormat;
+    MTL::PixelFormat pixelFormat = (MTL::PixelFormat)m_MetalLayer->pixelFormat();
+    
     renderPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
 
     NS::Error* error;
@@ -139,8 +133,14 @@ void Renderer::Render()
 {
     @autoreleasepool
     {
-        m_MetalDrawable = (__bridge_retained CA::MetalDrawable*)[m_MetalLayer nextDrawable];
- 
+        m_MetalDrawable = m_MetalLayer->nextDrawable();
+        
+        if (!m_MetalDrawable)
+        {
+            std::cerr << "[WARNING] m_MetalDrawable is null. Possibly due to invalid layer size or window not drawable." << std::endl;
+            return;
+        }
+
         m_MetalCommandBuffer = m_MetalCommandQueue->commandBuffer();
 
         MTL::RenderPassDescriptor* renderPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
@@ -167,12 +167,11 @@ void Renderer::Render()
 
         m_MetalCommandBuffer->presentDrawable(m_MetalDrawable);
         m_MetalCommandBuffer->commit();
+        
+        // note: this stalls the cpu every frame: very bad for performance
         m_MetalCommandBuffer->waitUntilCompleted();
 
         renderPassDescriptor->release();
-        
-        m_MetalDrawable->release();
-        m_MetalDrawable = nullptr;
     }
 }
 
