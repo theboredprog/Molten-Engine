@@ -22,15 +22,9 @@
 
 #pragma once
 
-#include "../platform/platform.hpp"
+#import <AppKit/NSWindow.h>
 
-#ifdef MOLTEN_MACOS
-    #include "../platform/macos/macos-window.hpp"
-    using InternalWindow = MacOSWindow;
-    using WindowHandle = GLFWwindow;
-#else
-    #error "Platform not supported."
-#endif
+class GLFWwindow;
 
 class Window
 {
@@ -41,7 +35,10 @@ private:
     
     const char* m_Title;
     
-    InternalWindow* m_InternalWindow;
+    GLFWwindow* m_InternalWindow;
+    NSWindow* m_MetalWindow;
+    
+    bool InitGLFW();
     
 public:
     
@@ -49,9 +46,10 @@ public:
     
     bool isOpen();
     
-    WindowHandle* GetInternalWindow();
-    
     void HandleInputEvents();
     
     void Close();
+    
+    inline GLFWwindow* GetInternalWindow() { return m_InternalWindow; }
+    inline NSWindow* GetMetalWindow() { return m_MetalWindow; }
 };

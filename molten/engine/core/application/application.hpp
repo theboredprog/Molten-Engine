@@ -30,18 +30,15 @@
 
 #include "window.hpp"
 
+class Renderer2D;
+
 class Application
 {
 private:
-
-    unsigned int m_Width;
-    unsigned int m_Height;
     
-    const char* m_Title;
+    Window* m_Window;
     
-    InternalWindow* m_Window;
-    
-    struct Renderer* m_Renderer;
+    Renderer2D* m_Renderer;
     
 public:
     

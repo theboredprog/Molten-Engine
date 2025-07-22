@@ -22,23 +22,23 @@
 
 #include "application.hpp"
 
-#include "../renderer/metal/renderer-2D.hpp"
-
 #include <iostream>
 
+#include "../renderer/renderer-2D.hpp"
+
 Application::Application(unsigned int width, unsigned int height, const char* title)
-: m_Width(width), m_Height(height), m_Title(title), m_Window(new InternalWindow(m_Width, m_Height, m_Title))
+: m_Window(new Window(width, height, title))
 {
-    /*m_Renderer = new Renderer(m_Window->GetInternalWindow());
+    m_Renderer = new Renderer2D();
     
-    if(!m_Renderer->Init(width, height))
+    if(!m_Renderer->Init(width, height, m_Window->GetMetalWindow()))
     {
         std::cerr << "[ERROR] Failed to initialize the renderer." << std::endl;
         m_Window->Close();
         return;
     }
 
-    m_Renderer->PrepareRenderingData();*/
+    m_Renderer->PrepareRenderingData();
 }
 
 bool Application::Init()
@@ -52,7 +52,7 @@ void Application::Run()
     {
         @autoreleasepool
         {
-            //m_Renderer->Render();
+            m_Renderer->Render();
         }
         
         m_Window->HandleInputEvents();
@@ -61,11 +61,11 @@ void Application::Run()
 
 void Application::Cleanup()
 {
-    /*if (m_Renderer)
+    if (m_Renderer)
     {
         m_Renderer->Cleanup();
         delete m_Renderer;
-    }*/
+    }
     
     if(m_Window)
     {

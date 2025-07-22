@@ -26,10 +26,9 @@
 #include <simd/simd.h>
 #include "renderer-2D.hpp"
 
-Renderer2D::Renderer2D(NSWindow* window)
-: m_MetalWindow(window) {}
+Renderer2D::Renderer2D() {}
 
-bool Renderer2D::Init(int width, int height)
+bool Renderer2D::Init(unsigned int width, unsigned int height, NSWindow* window)
 {
     m_MetalDevice = MTL::CreateSystemDefaultDevice();
     if (!m_MetalDevice)
@@ -45,18 +44,12 @@ bool Renderer2D::Init(int width, int height)
         return false;
     }
     
-    if (!m_MetalWindow)
-    {
-        std::cerr << "[ERROR] Failed to get native NSWindow from GLFW." << std::endl;
-        return false;
-    }
-    
     m_MetalLayer->setDevice(m_MetalDevice);
     m_MetalLayer->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm);
     m_MetalLayer->setDrawableSize(CGSizeMake(width, height));
     
-    m_MetalWindow.contentView.wantsLayer = YES;
-    m_MetalWindow.contentView.layer = (__bridge CALayer*)getMetalLayer();
+    window.contentView.wantsLayer = YES;
+    window.contentView.layer = (__bridge CALayer*)getMetalLayer();
     
     return true;
 }

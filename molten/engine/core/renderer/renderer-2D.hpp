@@ -36,8 +36,6 @@ private:
     
     CA::MetalLayer* m_MetalLayer;
     
-    NSWindow* m_MetalWindow;
-    
     MTL::Buffer* m_TriangleVertexBuffer;
     MTL::Library* m_MetalDefaultLibrary;
     MTL::CommandQueue* m_MetalCommandQueue;
@@ -47,9 +45,9 @@ private:
     
 public:
     
-    Renderer2D(NSWindow* window);
+    Renderer2D();
     
-    bool Init(int width, int height);
+    bool Init(unsigned int width, unsigned int height, NSWindow* window);
     
     void PrepareRenderingData();
     

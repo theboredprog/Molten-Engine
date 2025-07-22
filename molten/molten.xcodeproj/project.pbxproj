@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3EB674262E2FCFF300B7049D /* macos-window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EB674252E2FCFEF00B7049D /* macos-window.hpp */; };
-		3EB674292E2FD09700B7049D /* macos-window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EB674282E2FD08F00B7049D /* macos-window.mm */; };
 		3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EB6742A2E2FD2C800B7049D /* window.hpp */; };
-		3EB6742D2E2FD3A200B7049D /* platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EB6742C2E2FD39800B7049D /* platform.hpp */; };
 		3EB6742F2E2FD4C800B7049D /* window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6742E2E2FD4C400B7049D /* window.mm */; };
 		3EDC0BB12E2F822D00A33DAE /* application.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE12E2F70EE00A33DAE /* application.mm */; };
 		3EDC0BB22E2F822D00A33DAE /* renderer-2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE62E2F70EE00A33DAE /* renderer-2D.mm */; };
@@ -54,10 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3EB674252E2FCFEF00B7049D /* macos-window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "macos-window.hpp"; sourceTree = "<group>"; };
-		3EB674282E2FD08F00B7049D /* macos-window.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "macos-window.mm"; sourceTree = "<group>"; };
 		3EB6742A2E2FD2C800B7049D /* window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = window.hpp; sourceTree = "<group>"; };
-		3EB6742C2E2FD39800B7049D /* platform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = platform.hpp; sourceTree = "<group>"; };
 		3EB6742E2E2FD4C400B7049D /* window.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = window.mm; sourceTree = "<group>"; };
 		3EDC0AE02E2F70EE00A33DAE /* application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = application.hpp; sourceTree = "<group>"; };
 		3EDC0AE12E2F70EE00A33DAE /* application.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = application.mm; sourceTree = "<group>"; };
@@ -289,33 +283,11 @@
 			path = application;
 			sourceTree = "<group>";
 		};
-		3EDC0AE32E2F70EE00A33DAE /* ecs */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ecs;
-			sourceTree = "<group>";
-		};
-		3EDC0AE42E2F70EE00A33DAE /* math */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = math;
-			sourceTree = "<group>";
-		};
-		3EDC0AE72E2F70EE00A33DAE /* metal */ = {
+		3EDC0AE82E2F70EE00A33DAE /* renderer */ = {
 			isa = PBXGroup;
 			children = (
 				3EDC0AE52E2F70EE00A33DAE /* renderer-2D.hpp */,
 				3EDC0AE62E2F70EE00A33DAE /* renderer-2D.mm */,
-			);
-			path = metal;
-			sourceTree = "<group>";
-		};
-		3EDC0AE82E2F70EE00A33DAE /* renderer */ = {
-			isa = PBXGroup;
-			children = (
-				3EDC0AE72E2F70EE00A33DAE /* metal */,
 			);
 			path = renderer;
 			sourceTree = "<group>";
@@ -324,11 +296,8 @@
 			isa = PBXGroup;
 			children = (
 				3EDC0AE22E2F70EE00A33DAE /* application */,
-				3EDC0AE32E2F70EE00A33DAE /* ecs */,
-				3EDC0AE42E2F70EE00A33DAE /* math */,
 				3EDC0AE82E2F70EE00A33DAE /* renderer */,
 				3EDC0AE92E2F70EE00A33DAE /* mtl_implementation.mm */,
-				3EDC0AED2E2F70EE00A33DAE /* platform */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -339,24 +308,6 @@
 				3EDC0AEA2E2F70EE00A33DAE /* core */,
 			);
 			path = engine;
-			sourceTree = "<group>";
-		};
-		3EDC0AEC2E2F70EE00A33DAE /* macos */ = {
-			isa = PBXGroup;
-			children = (
-				3EB674282E2FD08F00B7049D /* macos-window.mm */,
-				3EB674252E2FCFEF00B7049D /* macos-window.hpp */,
-			);
-			path = macos;
-			sourceTree = "<group>";
-		};
-		3EDC0AED2E2F70EE00A33DAE /* platform */ = {
-			isa = PBXGroup;
-			children = (
-				3EB6742C2E2FD39800B7049D /* platform.hpp */,
-				3EDC0AEC2E2F70EE00A33DAE /* macos */,
-			);
-			path = platform;
 			sourceTree = "<group>";
 		};
 		3EDC0AF62E2F70EE00A33DAE /* GLFW */ = {
@@ -611,8 +562,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */,
-				3EB674262E2FCFF300B7049D /* macos-window.hpp in Headers */,
-				3EB6742D2E2FD3A200B7049D /* platform.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,7 +656,6 @@
 				3EB6742F2E2FD4C800B7049D /* window.mm in Sources */,
 				3EDC0BB22E2F822D00A33DAE /* renderer-2D.mm in Sources */,
 				3EDC0BB32E2F822D00A33DAE /* mtl_implementation.mm in Sources */,
-				3EB674292E2FD09700B7049D /* macos-window.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

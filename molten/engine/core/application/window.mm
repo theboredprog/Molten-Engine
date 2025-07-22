@@ -22,31 +22,69 @@
 
 #include "window.hpp"
 
+#include <iostream>
+
+#define GLFW_INCLUDE_NONE
+#import <GLFW/glfw3.h>
+
+#define GLFW_EXPOSE_NATIVE_COCOA
+#import <GLFW/glfw3native.h>
+
+void glfwErrorCallback(int error, const char* description)
+{
+    std::cerr << "[GLFW ERROR] (" << error << "): " << description << std::endl;
+}
+
+bool Window::InitGLFW()
+{
+    if(!glfwInit())
+    {
+        std::cerr << "[ERROR] Failed to initialize GLFW." << std::endl;
+        glfwTerminate();
+        return false;
+    }
+    
+    glfwSetErrorCallback(glfwErrorCallback);
+    
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    
+    m_InternalWindow = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
+    
+    if (!m_InternalWindow)
+    {
+        std::cerr << "[ERROR] Failed to create GLFW window." << std::endl;
+        glfwTerminate();
+        return false;
+    }
+    
+    int width, height;
+    glfwGetFramebufferSize(m_InternalWindow, &width, &height);
+    
+    m_MetalWindow = glfwGetCocoaWindow(m_InternalWindow);
+    if (!m_MetalWindow)
+    {
+        std::cerr << "[ERROR] Failed to get native NSWindow from GLFW." << std::endl;
+        return false;
+    }
+    
+    return true;
+}
+
 Window::Window(unsigned int width, unsigned int height, const char* title)
-: m_Width(width), m_Height(height), m_Title(title), m_InternalWindow(new InternalWindow(width, height, title))
-{}
+: m_Width(width), m_Height(height), m_Title(title) { InitGLFW(); }
 
 bool Window::isOpen()
 {
-    return m_InternalWindow->isOpen();
-}
-
-WindowHandle* Window::GetInternalWindow()
-{
-    return m_InternalWindow->GetInternalWindow();
+    return !glfwWindowShouldClose(m_InternalWindow);
 }
 
 void Window::HandleInputEvents()
 {
-    m_InternalWindow->HandleInputEvents();
+    glfwPollEvents();
 }
 
 void Window::Close()
 {
-    m_InternalWindow->Close();
-    
-    if(m_InternalWindow)
-    {
-        delete m_InternalWindow;
-    }
+    glfwDestroyWindow(m_InternalWindow);
+    glfwTerminate();
 }
