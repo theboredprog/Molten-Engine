@@ -27,8 +27,9 @@
 //
 
 #include <Metal/Metal.h>
-#include <QuartzCore/CAMetalLayer.h>
 #include <Metal/Metal.hpp>
+
+#include <QuartzCore/CAMetalLayer.h>
 #include <QuartzCore/CAMetalLayer.hpp>
 
 #import <AppKit/AppKit.h>

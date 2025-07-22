@@ -30,8 +30,13 @@
 
 #include <iostream>
 
+#define GLFW_INCLUDE_NONE
+#import <GLFW/glfw3.h>
+
 #define GLFW_EXPOSE_NATIVE_COCOA
 #import <GLFW/glfw3native.h>
+
+#include "../renderer/metal/renderer.hpp"
 
 void glfwErrorCallback(int error, const char* description)
 {
@@ -40,14 +45,14 @@ void glfwErrorCallback(int error, const char* description)
 
 bool Application::initWindow()
 {
-    glfwSetErrorCallback(glfwErrorCallback);
-    
     if(!glfwInit())
     {
         std::cerr << "[ERROR] Failed to initialize GLFW." << std::endl;
         glfwTerminate();
         return false;
     }
+    
+    glfwSetErrorCallback(glfwErrorCallback);
     
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     
@@ -63,12 +68,11 @@ bool Application::initWindow()
     int width, height;
     glfwGetFramebufferSize(m_GlfwWindow, &width, &height);
     
-    m_Renderer = std::make_unique<Renderer>(glfwGetCocoaWindow(m_GlfwWindow));
+    m_Renderer = new Renderer(glfwGetCocoaWindow(m_GlfwWindow));
     
     if(!m_Renderer->Init(width, height))
     {
         std::cerr << "[ERROR] Failed to initialize the renderer." << std::endl;
-        m_Renderer.reset();
         glfwDestroyWindow(m_GlfwWindow);
         glfwTerminate();
         return false;
@@ -110,7 +114,9 @@ void Application::Cleanup()
     if (m_Renderer)
     {
         m_Renderer->Cleanup();
+        delete m_Renderer;
     }
     
+    glfwDestroyWindow(m_GlfwWindow);
     glfwTerminate();
 }

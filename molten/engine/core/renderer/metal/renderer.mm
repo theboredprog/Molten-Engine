@@ -63,6 +63,14 @@ bool Renderer::Init(int width, int height)
     m_MetalWindow.contentView.wantsLayer = YES;
     m_MetalWindow.contentView.layer = getMetalLayer();
     
+    // consider turning this into a more c++ style by doing something like
+    /*
+     CA::MetalLayer* metalLayer = CA::MetalLayer::layer();
+     metalLayer->setDevice(device);
+     metalLayer->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm);
+     metalLayer->setDrawableSize(CGSizeMake(SCR_WIDTH, SCR_HEIGHT));
+     */
+    
     return true;
 }
 

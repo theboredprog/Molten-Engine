@@ -7,22 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3EDC0B902E2F70EE00A33DAE /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0AF92E2F70EE00A33DAE /* libglfw3.a */; };
-		3EDC0B922E2F70EE00A33DAE /* triangle-shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AEE2E2F70EE00A33DAE /* triangle-shader.metal */; };
-		3EDC0B932E2F70EE00A33DAE /* mtl_implementation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE92E2F70EE00A33DAE /* mtl_implementation.mm */; };
-		3EDC0B942E2F70EE00A33DAE /* renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE62E2F70EE00A33DAE /* renderer.mm */; };
-		3EDC0B952E2F70EE00A33DAE /* application.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE12E2F70EE00A33DAE /* application.mm */; };
-		3EDC0B962E2F70EE00A33DAE /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AF12E2F70EE00A33DAE /* main.mm */; };
-		3EDC0B992E2F719800A33DAE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B982E2F719800A33DAE /* CoreVideo.framework */; };
-		3EDC0B9B2E2F719E00A33DAE /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B9A2E2F719E00A33DAE /* IOKit.framework */; };
-		3EDC0B9D2E2F71A300A33DAE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B9C2E2F71A300A33DAE /* Cocoa.framework */; };
-		3EDC0B9F2E2F72F800A33DAE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B9E2E2F72F800A33DAE /* QuartzCore.framework */; };
-		3EDC0BA62E2F74FB00A33DAE /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0BA52E2F74FB00A33DAE /* Metal.framework */; };
-		3EDC0BA82E2F751E00A33DAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0BA72E2F751E00A33DAE /* Foundation.framework */; };
+		3EDC0BB12E2F822D00A33DAE /* application.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE12E2F70EE00A33DAE /* application.mm */; };
+		3EDC0BB22E2F822D00A33DAE /* renderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE62E2F70EE00A33DAE /* renderer.mm */; };
+		3EDC0BB32E2F822D00A33DAE /* mtl_implementation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE92E2F70EE00A33DAE /* mtl_implementation.mm */; };
+		3EDC0BB42E2F824A00A33DAE /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0AF92E2F70EE00A33DAE /* libglfw3.a */; };
+		3EDC0BB52E2F825100A33DAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0BA72E2F751E00A33DAE /* Foundation.framework */; };
+		3EDC0BB62E2F825500A33DAE /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0BA52E2F74FB00A33DAE /* Metal.framework */; };
+		3EDC0BB72E2F825C00A33DAE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B982E2F719800A33DAE /* CoreVideo.framework */; };
+		3EDC0BB82E2F826400A33DAE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B9E2E2F72F800A33DAE /* QuartzCore.framework */; };
+		3EDC0BB92E2F826B00A33DAE /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B9A2E2F719E00A33DAE /* IOKit.framework */; };
+		3EDC0BBA2E2F826F00A33DAE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B9C2E2F71A300A33DAE /* Cocoa.framework */; };
+		3EDC0BC82E2F837400A33DAE /* libmolten.lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0BAD2E2F81F200A33DAE /* libmolten.lib.a */; };
+		3EDC0BC92E2F884E00A33DAE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B9C2E2F71A300A33DAE /* Cocoa.framework */; };
+		3EDC0BCA2E2F885200A33DAE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B982E2F719800A33DAE /* CoreVideo.framework */; };
+		3EDC0BCB2E2F885600A33DAE /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0BA52E2F74FB00A33DAE /* Metal.framework */; };
+		3EDC0BCC2E2F885C00A33DAE /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B9A2E2F719E00A33DAE /* IOKit.framework */; };
+		3EDC0BCD2E2F886300A33DAE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0B9E2E2F72F800A33DAE /* QuartzCore.framework */; };
+		3EDC0BCE2E2F886C00A33DAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EDC0BA72E2F751E00A33DAE /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3EDC0BC62E2F835E00A33DAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EDC0ACE2E2F70A500A33DAE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3EDC0BAC2E2F81F200A33DAE;
+			remoteInfo = molten.lib;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
-		3EDC0AD42E2F70A500A33DAE /* CopyFiles */ = {
+		3EDC0BBD2E2F835300A33DAE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -34,14 +49,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3EDC0AD62E2F70A500A33DAE /* molten */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = molten; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EDC0AE02E2F70EE00A33DAE /* application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = application.hpp; sourceTree = "<group>"; };
 		3EDC0AE12E2F70EE00A33DAE /* application.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = application.mm; sourceTree = "<group>"; };
 		3EDC0AE52E2F70EE00A33DAE /* renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = renderer.hpp; sourceTree = "<group>"; };
 		3EDC0AE62E2F70EE00A33DAE /* renderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = renderer.mm; sourceTree = "<group>"; };
 		3EDC0AE92E2F70EE00A33DAE /* mtl_implementation.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = mtl_implementation.mm; sourceTree = "<group>"; };
-		3EDC0AEE2E2F70EE00A33DAE /* triangle-shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "triangle-shader.metal"; sourceTree = "<group>"; };
-		3EDC0AF12E2F70EE00A33DAE /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		3EDC0AF42E2F70EE00A33DAE /* glfw3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfw3.h; sourceTree = "<group>"; };
 		3EDC0AF52E2F70EE00A33DAE /* glfw3native.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = glfw3native.h; sourceTree = "<group>"; };
 		3EDC0AF92E2F70EE00A33DAE /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libglfw3.a; sourceTree = "<group>"; };
@@ -192,20 +204,44 @@
 		3EDC0B9E2E2F72F800A33DAE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3EDC0BA52E2F74FB00A33DAE /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		3EDC0BA72E2F751E00A33DAE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3EDC0BAD2E2F81F200A33DAE /* libmolten.lib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmolten.lib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EDC0BBF2E2F835300A33DAE /* molten.app */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = molten.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3EDC0BC02E2F835300A33DAE /* molten.app */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = molten.app;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
-		3EDC0AD32E2F70A500A33DAE /* Frameworks */ = {
+		3EDC0BAB2E2F81F200A33DAE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EDC0BA82E2F751E00A33DAE /* Foundation.framework in Frameworks */,
-				3EDC0BA62E2F74FB00A33DAE /* Metal.framework in Frameworks */,
-				3EDC0B9F2E2F72F800A33DAE /* QuartzCore.framework in Frameworks */,
-				3EDC0B9D2E2F71A300A33DAE /* Cocoa.framework in Frameworks */,
-				3EDC0B9B2E2F719E00A33DAE /* IOKit.framework in Frameworks */,
-				3EDC0B992E2F719800A33DAE /* CoreVideo.framework in Frameworks */,
-				3EDC0B902E2F70EE00A33DAE /* libglfw3.a in Frameworks */,
+				3EDC0BBA2E2F826F00A33DAE /* Cocoa.framework in Frameworks */,
+				3EDC0BB92E2F826B00A33DAE /* IOKit.framework in Frameworks */,
+				3EDC0BB82E2F826400A33DAE /* QuartzCore.framework in Frameworks */,
+				3EDC0BB72E2F825C00A33DAE /* CoreVideo.framework in Frameworks */,
+				3EDC0BB62E2F825500A33DAE /* Metal.framework in Frameworks */,
+				3EDC0BB52E2F825100A33DAE /* Foundation.framework in Frameworks */,
+				3EDC0BB42E2F824A00A33DAE /* libglfw3.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3EDC0BBC2E2F835300A33DAE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3EDC0BCE2E2F886C00A33DAE /* Foundation.framework in Frameworks */,
+				3EDC0BCD2E2F886300A33DAE /* QuartzCore.framework in Frameworks */,
+				3EDC0BCC2E2F885C00A33DAE /* IOKit.framework in Frameworks */,
+				3EDC0BCB2E2F885600A33DAE /* Metal.framework in Frameworks */,
+				3EDC0BCA2E2F885200A33DAE /* CoreVideo.framework in Frameworks */,
+				3EDC0BC92E2F884E00A33DAE /* Cocoa.framework in Frameworks */,
+				3EDC0BC82E2F837400A33DAE /* libmolten.lib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,11 +252,8 @@
 			isa = PBXGroup;
 			children = (
 				3EDC0AEB2E2F70EE00A33DAE /* engine */,
-				3EDC0AED2E2F70EE00A33DAE /* platform */,
-				3EDC0AF02E2F70EE00A33DAE /* resources */,
-				3EDC0AF22E2F70EE00A33DAE /* sandbox */,
-				3EDC0AF32E2F70EE00A33DAE /* tests */,
 				3EDC0B8F2E2F70EE00A33DAE /* third_party */,
+				3EDC0BC02E2F835300A33DAE /* molten.app */,
 				3EDC0B972E2F719800A33DAE /* Frameworks */,
 				3EDC0AD72E2F70A500A33DAE /* Products */,
 			);
@@ -229,7 +262,8 @@
 		3EDC0AD72E2F70A500A33DAE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3EDC0AD62E2F70A500A33DAE /* molten */,
+				3EDC0BAD2E2F81F200A33DAE /* libmolten.lib.a */,
+				3EDC0BBF2E2F835300A33DAE /* molten.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -282,6 +316,7 @@
 				3EDC0AE42E2F70EE00A33DAE /* math */,
 				3EDC0AE82E2F70EE00A33DAE /* renderer */,
 				3EDC0AE92E2F70EE00A33DAE /* mtl_implementation.mm */,
+				3EDC0AED2E2F70EE00A33DAE /* platform */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -307,37 +342,6 @@
 				3EDC0AEC2E2F70EE00A33DAE /* macos */,
 			);
 			path = platform;
-			sourceTree = "<group>";
-		};
-		3EDC0AEF2E2F70EE00A33DAE /* shaders */ = {
-			isa = PBXGroup;
-			children = (
-				3EDC0AEE2E2F70EE00A33DAE /* triangle-shader.metal */,
-			);
-			path = shaders;
-			sourceTree = "<group>";
-		};
-		3EDC0AF02E2F70EE00A33DAE /* resources */ = {
-			isa = PBXGroup;
-			children = (
-				3EDC0AEF2E2F70EE00A33DAE /* shaders */,
-			);
-			path = resources;
-			sourceTree = "<group>";
-		};
-		3EDC0AF22E2F70EE00A33DAE /* sandbox */ = {
-			isa = PBXGroup;
-			children = (
-				3EDC0AF12E2F70EE00A33DAE /* main.mm */,
-			);
-			path = sandbox;
-			sourceTree = "<group>";
-		};
-		3EDC0AF32E2F70EE00A33DAE /* tests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = tests;
 			sourceTree = "<group>";
 		};
 		3EDC0AF62E2F70EE00A33DAE /* GLFW */ = {
@@ -586,24 +590,57 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		3EDC0BA92E2F81F200A33DAE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		3EDC0AD52E2F70A500A33DAE /* molten */ = {
+		3EDC0BAC2E2F81F200A33DAE /* molten.lib */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3EDC0ADD2E2F70A500A33DAE /* Build configuration list for PBXNativeTarget "molten" */;
+			buildConfigurationList = 3EDC0BAE2E2F81F200A33DAE /* Build configuration list for PBXNativeTarget "molten.lib" */;
 			buildPhases = (
-				3EDC0AD22E2F70A500A33DAE /* Sources */,
-				3EDC0AD32E2F70A500A33DAE /* Frameworks */,
-				3EDC0AD42E2F70A500A33DAE /* CopyFiles */,
+				3EDC0BA92E2F81F200A33DAE /* Headers */,
+				3EDC0BAA2E2F81F200A33DAE /* Sources */,
+				3EDC0BAB2E2F81F200A33DAE /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = molten;
+			name = molten.lib;
 			packageProductDependencies = (
 			);
-			productName = molten;
-			productReference = 3EDC0AD62E2F70A500A33DAE /* molten */;
+			productName = molten.lib;
+			productReference = 3EDC0BAD2E2F81F200A33DAE /* libmolten.lib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		3EDC0BBE2E2F835300A33DAE /* molten.app */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3EDC0BC32E2F835300A33DAE /* Build configuration list for PBXNativeTarget "molten.app" */;
+			buildPhases = (
+				3EDC0BBB2E2F835300A33DAE /* Sources */,
+				3EDC0BBC2E2F835300A33DAE /* Frameworks */,
+				3EDC0BBD2E2F835300A33DAE /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3EDC0BC72E2F835E00A33DAE /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				3EDC0BC02E2F835300A33DAE /* molten.app */,
+			);
+			name = molten.app;
+			packageProductDependencies = (
+			);
+			productName = molten.app;
+			productReference = 3EDC0BBF2E2F835300A33DAE /* molten.app */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -615,7 +652,10 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
-					3EDC0AD52E2F70A500A33DAE = {
+					3EDC0BAC2E2F81F200A33DAE = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					3EDC0BBE2E2F835300A33DAE = {
 						CreatedOnToolsVersion = 16.4;
 					};
 				};
@@ -634,25 +674,39 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3EDC0AD52E2F70A500A33DAE /* molten */,
+				3EDC0BAC2E2F81F200A33DAE /* molten.lib */,
+				3EDC0BBE2E2F835300A33DAE /* molten.app */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3EDC0AD22E2F70A500A33DAE /* Sources */ = {
+		3EDC0BAA2E2F81F200A33DAE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EDC0B922E2F70EE00A33DAE /* triangle-shader.metal in Sources */,
-				3EDC0B932E2F70EE00A33DAE /* mtl_implementation.mm in Sources */,
-				3EDC0B942E2F70EE00A33DAE /* renderer.mm in Sources */,
-				3EDC0B952E2F70EE00A33DAE /* application.mm in Sources */,
-				3EDC0B962E2F70EE00A33DAE /* main.mm in Sources */,
+				3EDC0BB12E2F822D00A33DAE /* application.mm in Sources */,
+				3EDC0BB22E2F822D00A33DAE /* renderer.mm in Sources */,
+				3EDC0BB32E2F822D00A33DAE /* mtl_implementation.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3EDC0BBB2E2F835300A33DAE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3EDC0BC72E2F835E00A33DAE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3EDC0BAC2E2F81F200A33DAE /* molten.lib */;
+			targetProxy = 3EDC0BC62E2F835E00A33DAE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3EDC0ADB2E2F70A500A33DAE /* Debug */ = {
@@ -770,10 +824,11 @@
 			};
 			name = Release;
 		};
-		3EDC0ADE2E2F70A500A33DAE /* Debug */ = {
+		3EDC0BAF2E2F81F200A33DAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/third_party/glfw/include",
 					"$(PROJECT_DIR)/third_party/metal-cpp",
@@ -783,13 +838,15 @@
 					"$(PROJECT_DIR)/third_party/glfw/lib-arm64",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		3EDC0ADF2E2F70A500A33DAE /* Release */ = {
+		3EDC0BB02E2F81F200A33DAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/third_party/glfw/include",
 					"$(PROJECT_DIR)/third_party/metal-cpp",
@@ -798,6 +855,25 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/third_party/glfw/lib-arm64",
 				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		3EDC0BC42E2F835300A33DAE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/engine/core/**";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3EDC0BC52E2F835300A33DAE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/engine/core/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -814,11 +890,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3EDC0ADD2E2F70A500A33DAE /* Build configuration list for PBXNativeTarget "molten" */ = {
+		3EDC0BAE2E2F81F200A33DAE /* Build configuration list for PBXNativeTarget "molten.lib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3EDC0ADE2E2F70A500A33DAE /* Debug */,
-				3EDC0ADF2E2F70A500A33DAE /* Release */,
+				3EDC0BAF2E2F81F200A33DAE /* Debug */,
+				3EDC0BB02E2F81F200A33DAE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3EDC0BC32E2F835300A33DAE /* Build configuration list for PBXNativeTarget "molten.app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3EDC0BC42E2F835300A33DAE /* Debug */,
+				3EDC0BC52E2F835300A33DAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

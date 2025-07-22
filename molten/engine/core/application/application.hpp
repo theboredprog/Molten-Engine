@@ -27,10 +27,6 @@
 //
 
 #pragma once
-#define GLFW_INCLUDE_NONE
-#import <GLFW/glfw3.h>
-
-#include "../renderer/metal/renderer.hpp"
 
 #include <memory>
 
@@ -40,13 +36,12 @@ private:
 
     bool initWindow();
 
-    GLFWwindow* m_GlfwWindow;
-    
+    struct GLFWwindow* m_GlfwWindow;    
+    struct Renderer* m_Renderer;
+
     int m_Width;
     int m_Height;
     const char* m_Title;
-    
-    std::unique_ptr<Renderer> m_Renderer;
     
 public:
     

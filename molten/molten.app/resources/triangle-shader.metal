@@ -20,23 +20,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-//  main.mm
-//  Molten
+//  triangle-shader.metal
+//  Molten App
 //
-//  Created by Gabriele Vierti on 20/07/25.
+//  Created by Gabriele Vierti on 21/07/25.
 //
 
-#include "../engine/core/application/application.hpp"
+#include <metal_stdlib>
+using namespace metal;
 
-int main(int argc, const char * argv[])
+struct VertexOut
 {
-    Application* app = new Application(800, 600, "App");
+    float4 position [[position]];
+};
+
+vertex VertexOut vertexShader(uint vertexID [[vertex_id]], constant float3* vertexPositions)
+{
+    VertexOut out;
     
-    app->Init();
-    app->Run();
-    app->Cleanup();
+    out.position = float4(vertexPositions[vertexID], 1.0);
     
-    delete app;
-    
-    return 0;
+    return out;
 }
+
+fragment float4 fragmentShader(VertexOut in [[stage_in]])
+{
+    float4 mintColor = float4(1.0, 0.5, 0.2, 1.0);
+
+    return mintColor;
+}
+
