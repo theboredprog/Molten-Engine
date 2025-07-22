@@ -20,41 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-//  application.hpp
+//  main.mm
 //  Molten
 //
 //  Created by Gabriele Vierti on 20/07/25.
 //
 
-#pragma once
-#define GLFW_INCLUDE_NONE
-#import <GLFW/glfw3.h>
+#include "../engine/core/application/application.hpp"
 
-#include "renderer.hpp"
-
-#include <memory>
-
-class Application
+int main(int argc, const char * argv[])
 {
-private:
-
-    bool initWindow();
-
-    GLFWwindow* m_GlfwWindow;
+    Application* app = new Application(800, 600, "App");
     
-    int m_Width;
-    int m_Height;
-    const char* m_Title;
+    app->Init();
+    app->Run();
+    app->Cleanup();
     
-    std::unique_ptr<Renderer> m_Renderer;
+    delete app;
     
-public:
-    
-    Application(int width, int height, const char* title);
-    
-    void Init();
-    
-    void Run();
-    
-    void Cleanup();
-};
+    return 0;
+}

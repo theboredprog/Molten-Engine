@@ -20,23 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-//  main.mm
+//  mtl_implementation.mm
 //  Molten
 //
 //  Created by Gabriele Vierti on 20/07/25.
 //
 
-#include "application.hpp"
+#define NS_PRIVATE_IMPLEMENTATION
+#define CA_PRIVATE_IMPLEMENTATION
+#define MTL_PRIVATE_IMPLEMENTATION
 
-int main(int argc, const char * argv[])
-{
-    Application* app = new Application(800, 600, "App");
-    
-    app->Init();
-    app->Run();
-    app->Cleanup();
-    
-    delete app;
-    
-    return 0;
-}
+#include <Foundation/Foundation.hpp>
+#include <Metal/Metal.hpp>
+#include <QuartzCore/QuartzCore.hpp>

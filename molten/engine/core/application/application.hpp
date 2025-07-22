@@ -20,15 +20,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-//  mtl_implementation.mm
+//  application.hpp
 //  Molten
 //
 //  Created by Gabriele Vierti on 20/07/25.
 //
 
-#define NS_PRIVATE_IMPLEMENTATION
-#define CA_PRIVATE_IMPLEMENTATION
-#define MTL_PRIVATE_IMPLEMENTATION
-#include <Foundation/Foundation.hpp>
-#include <Metal/Metal.hpp>
-#include <QuartzCore/QuartzCore.hpp>
+#pragma once
+#define GLFW_INCLUDE_NONE
+#import <GLFW/glfw3.h>
+
+#include "../renderer/metal/renderer.hpp"
+
+#include <memory>
+
+class Application
+{
+private:
+
+    bool initWindow();
+
+    GLFWwindow* m_GlfwWindow;
+    
+    int m_Width;
+    int m_Height;
+    const char* m_Title;
+    
+    std::unique_ptr<Renderer> m_Renderer;
+    
+public:
+    
+    Application(int width, int height, const char* title);
+    
+    void Init();
+    
+    void Run();
+    
+    void Cleanup();
+};
