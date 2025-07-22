@@ -19,37 +19,34 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//
-//  application.hpp
-//  Molten
-//
-//  Created by Gabriele Vierti on 20/07/25.
-//
-
-#pragma once
 
 #include "window.hpp"
 
-class Application
-{
-private:
+Window::Window(unsigned int width, unsigned int height, const char* title)
+: m_Width(width), m_Height(height), m_Title(title), m_InternalWindow(new InternalWindow(width, height, title))
+{}
 
-    unsigned int m_Width;
-    unsigned int m_Height;
+bool Window::isOpen()
+{
+    return m_InternalWindow->isOpen();
+}
+
+WindowHandle* Window::GetInternalWindow()
+{
+    return m_InternalWindow->GetInternalWindow();
+}
+
+void Window::HandleInputEvents()
+{
+    m_InternalWindow->HandleInputEvents();
+}
+
+void Window::Close()
+{
+    m_InternalWindow->Close();
     
-    const char* m_Title;
-    
-    InternalWindow* m_Window;
-    
-    struct Renderer* m_Renderer;
-    
-public:
-    
-    Application(unsigned int width, unsigned int height, const char* title);
-    
-    bool Init();
-    
-    void Run();
-    
-    void Cleanup();
-};
+    if(m_InternalWindow)
+    {
+        delete m_InternalWindow;
+    }
+}

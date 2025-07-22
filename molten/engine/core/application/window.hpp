@@ -19,18 +19,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//
-//  application.hpp
-//  Molten
-//
-//  Created by Gabriele Vierti on 20/07/25.
-//
 
 #pragma once
 
-#include "window.hpp"
+#include "../platform/platform.hpp"
 
-class Application
+#ifdef MOLTEN_MACOS
+    #include "../platform/macos/macos-window.hpp"
+    using InternalWindow = MacOSWindow;
+    using WindowHandle = GLFWwindow;
+#else
+    #error "Platform not supported."
+#endif
+
+class Window
 {
 private:
 
@@ -39,17 +41,17 @@ private:
     
     const char* m_Title;
     
-    InternalWindow* m_Window;
-    
-    struct Renderer* m_Renderer;
+    InternalWindow* m_InternalWindow;
     
 public:
     
-    Application(unsigned int width, unsigned int height, const char* title);
+    Window(unsigned int width, unsigned int height, const char* title);
     
-    bool Init();
+    bool isOpen();
     
-    void Run();
+    WindowHandle* GetInternalWindow();
     
-    void Cleanup();
+    void HandleInputEvents();
+    
+    void Close();
 };

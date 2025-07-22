@@ -19,12 +19,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//
-//  renderer.hpp
-//  Molten
-//
-//  Created by Gabriele Vierti on 21/07/25.
-//
 
 #include <Metal/Metal.h>
 #include <Metal/Metal.hpp>
@@ -34,7 +28,7 @@
 
 #import <AppKit/AppKit.h>
 
-class Renderer
+class Renderer2D
 {
 private:
     
@@ -53,14 +47,15 @@ private:
     
 public:
     
-    Renderer(NSWindow* window);
+    Renderer2D(NSWindow* window);
     
     bool Init(int width, int height);
     
-    void Render();
-    void Cleanup();
-    
     void PrepareRenderingData();
+    
+    void Render();
+    
+    void Cleanup();
     
     inline MTL::Device* getMetalDevice() { return m_MetalDevice; }
     inline CA::MetalLayer* getMetalLayer() { return m_MetalLayer; }

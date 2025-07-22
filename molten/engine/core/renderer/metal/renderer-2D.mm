@@ -19,23 +19,17 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//
-//  renderer.mm
-//  Molten
-//
-//  Created by Gabriele Vierti on 21/07/25.
-//
 
 #include <iostream>
 #include <cstdlib>
 
 #include <simd/simd.h>
-#include "renderer.hpp"
+#include "renderer-2D.hpp"
 
-Renderer::Renderer(NSWindow* window)
+Renderer2D::Renderer2D(NSWindow* window)
 : m_MetalWindow(window) {}
 
-bool Renderer::Init(int width, int height)
+bool Renderer2D::Init(int width, int height)
 {
     m_MetalDevice = MTL::CreateSystemDefaultDevice();
     if (!m_MetalDevice)
@@ -67,7 +61,7 @@ bool Renderer::Init(int width, int height)
     return true;
 }
 
-void Renderer::PrepareRenderingData()
+void Renderer2D::PrepareRenderingData()
 {
     simd::float3 triangleVertices[] =
     {
@@ -129,7 +123,7 @@ void Renderer::PrepareRenderingData()
     renderPipelineDescriptor->release();
 }
 
-void Renderer::Render()
+void Renderer2D::Render()
 {
     @autoreleasepool
     {
@@ -168,42 +162,19 @@ void Renderer::Render()
         m_MetalCommandBuffer->presentDrawable(m_MetalDrawable);
         m_MetalCommandBuffer->commit();
         
-        // note: this stalls the cpu every frame: very bad for performance
+        // TODO: this stalls the cpu every frame: very bad for performance
+        // keep this in mind
         m_MetalCommandBuffer->waitUntilCompleted();
 
         renderPassDescriptor->release();
     }
 }
 
-void Renderer::Cleanup()
+void Renderer2D::Cleanup()
 {
-    if (m_MetalRenderPSO)
-    {
-        m_MetalRenderPSO->release();
-        m_MetalRenderPSO = nullptr;
-    }
-    
-    if (m_TriangleVertexBuffer)
-    {
-        m_TriangleVertexBuffer->release();
-        m_TriangleVertexBuffer = nullptr;
-    }
-    
-    if (m_MetalCommandQueue)
-    {
-        m_MetalCommandQueue->release();
-        m_MetalCommandQueue = nullptr;
-    }
-    
-    if (m_MetalDefaultLibrary)
-    {
-        m_MetalDefaultLibrary->release();
-        m_MetalDefaultLibrary = nullptr;
-    }
-    
-    if (m_MetalDevice)
-    {
-        m_MetalDevice->release();
-        m_MetalDevice = nullptr;
-    }
+    if (m_MetalRenderPSO)        { m_MetalRenderPSO->release();        m_MetalRenderPSO = nullptr; }
+    if (m_TriangleVertexBuffer)  { m_TriangleVertexBuffer->release();  m_TriangleVertexBuffer = nullptr; }
+    if (m_MetalCommandQueue)     { m_MetalCommandQueue->release();     m_MetalCommandQueue = nullptr; }
+    if (m_MetalDefaultLibrary)   { m_MetalDefaultLibrary->release();   m_MetalDefaultLibrary = nullptr; }
+    if (m_MetalDevice)           { m_MetalDevice->release();           m_MetalDevice = nullptr; }
 }

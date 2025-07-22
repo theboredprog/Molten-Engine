@@ -19,18 +19,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//
-//  application.hpp
-//  Molten
-//
-//  Created by Gabriele Vierti on 20/07/25.
-//
 
 #pragma once
 
-#include "window.hpp"
-
-class Application
+class MacOSWindow
 {
 private:
 
@@ -39,17 +31,20 @@ private:
     
     const char* m_Title;
     
-    InternalWindow* m_Window;
+    struct GLFWwindow* m_GlfwWindow;
     
-    struct Renderer* m_Renderer;
+    bool createWindow();
     
 public:
     
-    Application(unsigned int width, unsigned int height, const char* title);
+    MacOSWindow(unsigned int width, unsigned int height, const char* title);
     
-    bool Init();
+    bool isOpen();
     
-    void Run();
+    inline GLFWwindow* GetInternalWindow() { return m_GlfwWindow; }
     
-    void Cleanup();
+    void HandleInputEvents(); // TODO: need to put this away into an event manager.
+    
+    void Close();
 };
+

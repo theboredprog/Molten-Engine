@@ -19,104 +19,56 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//
-//  application.mm
-//  Molten
-//
-//  Created by Gabriele Vierti on 20/07/25.
-//
 
 #include "application.hpp"
 
+#include "../renderer/metal/renderer-2D.hpp"
+
 #include <iostream>
 
-#define GLFW_INCLUDE_NONE
-#import <GLFW/glfw3.h>
-
-#define GLFW_EXPOSE_NATIVE_COCOA
-#import <GLFW/glfw3native.h>
-
-#include "../renderer/metal/renderer.hpp"
-
-void glfwErrorCallback(int error, const char* description)
+Application::Application(unsigned int width, unsigned int height, const char* title)
+: m_Width(width), m_Height(height), m_Title(title), m_Window(new InternalWindow(m_Width, m_Height, m_Title))
 {
-    std::cerr << "[GLFW ERROR] (" << error << "): " << description << std::endl;
-}
-
-bool Application::initWindow()
-{
-    if(!glfwInit())
-    {
-        std::cerr << "[ERROR] Failed to initialize GLFW." << std::endl;
-        glfwTerminate();
-        return false;
-    }
-    
-    glfwSetErrorCallback(glfwErrorCallback);
-    
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    
-    m_GlfwWindow = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
-    
-    if (!m_GlfwWindow)
-    {
-        std::cerr << "[ERROR] Failed to create GLFW window." << std::endl;
-        glfwTerminate();
-        return false;
-    }
-    
-    int width, height;
-    glfwGetFramebufferSize(m_GlfwWindow, &width, &height);
-    
-    m_Renderer = new Renderer(glfwGetCocoaWindow(m_GlfwWindow));
+    /*m_Renderer = new Renderer(m_Window->GetInternalWindow());
     
     if(!m_Renderer->Init(width, height))
     {
         std::cerr << "[ERROR] Failed to initialize the renderer." << std::endl;
-        glfwDestroyWindow(m_GlfwWindow);
-        glfwTerminate();
-        return false;
-    }
-
-    m_Renderer->PrepareRenderingData();
-    
-    return true;
-}
-
-Application::Application(const int width, const int height, const char* title)
-: m_Width(width), m_Height(height), m_Title(title) {}
-
-void Application::Init()
-{
-    if(!initWindow())
-    {
-        std::cerr << "[ERROR] Failed to initialize the window." << std::endl;
-        glfwDestroyWindow(m_GlfwWindow);
-        glfwTerminate();
+        m_Window->Close();
         return;
     }
+
+    m_Renderer->PrepareRenderingData();*/
+}
+
+bool Application::Init()
+{
+    return true;
 }
 
 void Application::Run()
 {
-    while (!glfwWindowShouldClose(m_GlfwWindow))
+    while (m_Window->isOpen())
     {
         @autoreleasepool
         {
-            m_Renderer->Render();
+            //m_Renderer->Render();
         }
-        glfwPollEvents();
+        
+        m_Window->HandleInputEvents();
     }
 }
 
 void Application::Cleanup()
 {
-    if (m_Renderer)
+    /*if (m_Renderer)
     {
         m_Renderer->Cleanup();
         delete m_Renderer;
-    }
+    }*/
     
-    glfwDestroyWindow(m_GlfwWindow);
-    glfwTerminate();
+    if(m_Window)
+    {
+        delete m_Window;
+    }
 }
