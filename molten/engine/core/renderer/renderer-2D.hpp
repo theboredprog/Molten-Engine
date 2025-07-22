@@ -20,21 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <Metal/Metal.h>
-#include <Metal/Metal.hpp>
+namespace MTL
+{
+    class Buffer;
+    class Library;
+    class CommandQueue;
+    class RenderPipelineState;
+    class CommandBuffer;
+    class Device;
+}
 
-#include <QuartzCore/CAMetalLayer.h>
-#include <QuartzCore/CAMetalLayer.hpp>
+namespace CA
+{
+    class MetalDrawable;
+}
 
-#import <AppKit/AppKit.h>
+class Window;
 
 class Renderer2D
 {
 private:
-    
-    MTL::Device* m_MetalDevice;
-    
-    CA::MetalLayer* m_MetalLayer;
     
     MTL::Buffer* m_TriangleVertexBuffer;
     MTL::Library* m_MetalDefaultLibrary;
@@ -43,18 +48,17 @@ private:
     CA::MetalDrawable* m_MetalDrawable;
     MTL::CommandBuffer* m_MetalCommandBuffer;
     
+    Window* m_Window;
+    
 public:
     
     Renderer2D();
     
-    bool Init(unsigned int width, unsigned int height, NSWindow* window);
+    void Init(Window* window);
     
     void PrepareRenderingData();
     
     void Render();
     
     void Cleanup();
-    
-    inline MTL::Device* getMetalDevice() { return m_MetalDevice; }
-    inline CA::MetalLayer* getMetalLayer() { return m_MetalLayer; }
 };

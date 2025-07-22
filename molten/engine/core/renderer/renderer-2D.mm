@@ -24,34 +24,21 @@
 #include <cstdlib>
 
 #include <simd/simd.h>
+
+#include <Metal/Metal.h>
+#include <Metal/Metal.hpp>
+
+#include <QuartzCore/CAMetalLayer.h>
+#include <QuartzCore/CAMetalLayer.hpp>
+
 #include "renderer-2D.hpp"
+#include "../application/window.hpp"
 
 Renderer2D::Renderer2D() {}
 
-bool Renderer2D::Init(unsigned int width, unsigned int height, NSWindow* window)
+void Renderer2D::Init(Window* window)
 {
-    m_MetalDevice = MTL::CreateSystemDefaultDevice();
-    if (!m_MetalDevice)
-    {
-        std::cerr << "[ERROR] Failed to create Metal device." << std::endl;
-        return false;
-    }
-    
-    m_MetalLayer = CA::MetalLayer::layer();
-    if (!m_MetalLayer)
-    {
-        std::cerr << "[ERROR] Failed to create CAMetalLayer." << std::endl;
-        return false;
-    }
-    
-    m_MetalLayer->setDevice(m_MetalDevice);
-    m_MetalLayer->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm);
-    m_MetalLayer->setDrawableSize(CGSizeMake(width, height));
-    
-    window.contentView.wantsLayer = YES;
-    window.contentView.layer = (__bridge CALayer*)getMetalLayer();
-    
-    return true;
+    m_Window = window;
 }
 
 void Renderer2D::PrepareRenderingData()
@@ -63,11 +50,11 @@ void Renderer2D::PrepareRenderingData()
         { 0.0f,  0.5f, 0.0f}
     };
 
-    m_TriangleVertexBuffer = m_MetalDevice->newBuffer(&triangleVertices,
+    m_TriangleVertexBuffer = m_Window->GetMetalDevice()->newBuffer(&triangleVertices,
                                                   sizeof(triangleVertices),
                                                       MTL::ResourceStorageModeShared);
     
-    m_MetalDefaultLibrary = m_MetalDevice->newDefaultLibrary();
+    m_MetalDefaultLibrary = m_Window->GetMetalDevice()->newDefaultLibrary();
     
     if(!m_MetalDefaultLibrary)
     {
@@ -75,7 +62,7 @@ void Renderer2D::PrepareRenderingData()
         return;
     }
     
-    m_MetalCommandQueue = m_MetalDevice->newCommandQueue();
+    m_MetalCommandQueue = m_Window->GetMetalDevice()->newCommandQueue();
     
     auto vertexShader = m_MetalDefaultLibrary->newFunction(NS::String::string("vertexShader", NS::UTF8StringEncoding));
     
@@ -100,12 +87,12 @@ void Renderer2D::PrepareRenderingData()
         return;
     }
 
-    MTL::PixelFormat pixelFormat = (MTL::PixelFormat)m_MetalLayer->pixelFormat();
+    MTL::PixelFormat pixelFormat = (MTL::PixelFormat)m_Window->GetMetalLayer()->pixelFormat();
     
     renderPipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
 
     NS::Error* error;
-    m_MetalRenderPSO = m_MetalDevice->newRenderPipelineState(renderPipelineDescriptor, &error);
+    m_MetalRenderPSO = m_Window->GetMetalDevice()->newRenderPipelineState(renderPipelineDescriptor, &error);
     
     if (!m_MetalRenderPSO)
     {
@@ -120,7 +107,7 @@ void Renderer2D::Render()
 {
     @autoreleasepool
     {
-        m_MetalDrawable = m_MetalLayer->nextDrawable();
+        m_MetalDrawable = m_Window->GetMetalLayer()->nextDrawable();
         
         if (!m_MetalDrawable)
         {
@@ -169,5 +156,5 @@ void Renderer2D::Cleanup()
     if (m_TriangleVertexBuffer)  { m_TriangleVertexBuffer->release();  m_TriangleVertexBuffer = nullptr; }
     if (m_MetalCommandQueue)     { m_MetalCommandQueue->release();     m_MetalCommandQueue = nullptr; }
     if (m_MetalDefaultLibrary)   { m_MetalDefaultLibrary->release();   m_MetalDefaultLibrary = nullptr; }
-    if (m_MetalDevice)           { m_MetalDevice->release();           m_MetalDevice = nullptr; }
+    if (m_Window->GetMetalDevice()) { m_Window->GetMetalDevice()->release(); m_Window->SetMetalDevice(nullptr); }
 }

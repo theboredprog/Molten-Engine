@@ -26,10 +26,13 @@
 
 class GLFWwindow;
 
+namespace MTL { class Device; }
+namespace CA { class MetalLayer; }
+
 class Window
 {
 private:
-
+    
     unsigned int m_Width;
     unsigned int m_Height;
     
@@ -38,7 +41,12 @@ private:
     GLFWwindow* m_InternalWindow;
     NSWindow* m_MetalWindow;
     
-    bool InitGLFW();
+    MTL::Device* m_MetalDevice;
+    CA::MetalLayer* m_MetalLayer;
+    
+    static void frameBufferSizeCallback(GLFWwindow *window, int width, int height);
+    
+    bool InitGlfw();
     
 public:
     
@@ -51,5 +59,14 @@ public:
     void Close();
     
     inline GLFWwindow* GetInternalWindow() { return m_InternalWindow; }
+    
     inline NSWindow* GetMetalWindow() { return m_MetalWindow; }
+    
+    inline MTL::Device* GetMetalDevice() { return m_MetalDevice; }
+    
+    inline CA::MetalLayer* GetMetalLayer() { return m_MetalLayer; }
+
+    inline void SetMetalDevice(MTL::Device* device) { m_MetalDevice = device; }
+
+    inline void SetMetalLayer(CA::MetalLayer* layer) { m_MetalLayer = layer; }
 };

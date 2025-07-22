@@ -20,23 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "application.hpp"
-
 #include <iostream>
 
+#include "application.hpp"
 #include "../renderer/renderer-2D.hpp"
+#include "window.hpp"
 
 Application::Application(unsigned int width, unsigned int height, const char* title)
 : m_Window(new Window(width, height, title))
 {
     m_Renderer = new Renderer2D();
     
-    if(!m_Renderer->Init(width, height, m_Window->GetMetalWindow()))
-    {
-        std::cerr << "[ERROR] Failed to initialize the renderer." << std::endl;
-        m_Window->Close();
-        return;
-    }
+    m_Renderer->Init(m_Window);
 
     m_Renderer->PrepareRenderingData();
 }

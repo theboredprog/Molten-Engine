@@ -28,9 +28,8 @@
 
 #pragma once
 
-#include "window.hpp"
-
 class Renderer2D;
+class Window;
 
 class Application
 {

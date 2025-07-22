@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "window.hpp"
-
 #include <iostream>
 
 #define GLFW_INCLUDE_NONE
@@ -30,12 +28,29 @@
 #define GLFW_EXPOSE_NATIVE_COCOA
 #import <GLFW/glfw3native.h>
 
+#include <Metal/Metal.h>
+#include <Metal/Metal.hpp>
+
+#include <QuartzCore/CAMetalLayer.h>
+#include <QuartzCore/CAMetalLayer.hpp>
+
+#include "window.hpp"
+
 void glfwErrorCallback(int error, const char* description)
 {
     std::cerr << "[GLFW ERROR] (" << error << "): " << description << std::endl;
 }
 
-bool Window::InitGLFW()
+void Window::frameBufferSizeCallback(GLFWwindow *window, int width, int height)
+{
+    auto win = static_cast<Window*>(glfwGetWindowUserPointer(window));
+    if (win && win->m_MetalLayer)
+    {
+        win->m_MetalLayer->setDrawableSize(CGSizeMake(width, height));
+    }
+}
+
+bool Window::InitGlfw()
 {
     if(!glfwInit())
     {
@@ -57,8 +72,13 @@ bool Window::InitGLFW()
         return false;
     }
     
-    int width, height;
+    int width;
+    int height;
+    
     glfwGetFramebufferSize(m_InternalWindow, &width, &height);
+    
+    glfwSetWindowUserPointer(m_InternalWindow, this);
+    glfwSetFramebufferSizeCallback(m_InternalWindow, frameBufferSizeCallback);
     
     m_MetalWindow = glfwGetCocoaWindow(m_InternalWindow);
     if (!m_MetalWindow)
@@ -66,6 +86,27 @@ bool Window::InitGLFW()
         std::cerr << "[ERROR] Failed to get native NSWindow from GLFW." << std::endl;
         return false;
     }
+    
+    m_MetalDevice = MTL::CreateSystemDefaultDevice();
+    if (!m_MetalDevice)
+    {
+        std::cerr << "[ERROR] Failed to create Metal device." << std::endl;
+        return false;
+    }
+    
+    m_MetalLayer = CA::MetalLayer::layer();
+    if (!m_MetalLayer)
+    {
+        std::cerr << "[ERROR] Failed to create CAMetalLayer." << std::endl;
+        return false;
+    }
+    
+    m_MetalLayer->setDevice(m_MetalDevice);
+    m_MetalLayer->setPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm);
+    m_MetalLayer->setDrawableSize(CGSizeMake(width, height));
+    
+    m_MetalWindow.contentView.wantsLayer = YES;
+    m_MetalWindow.contentView.layer = (__bridge CALayer*)m_MetalLayer;
     
     return true;
 }
