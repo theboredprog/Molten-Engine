@@ -112,7 +112,7 @@ bool Window::InitGlfw()
 }
 
 Window::Window(unsigned int width, unsigned int height, const char* title)
-: m_Width(width), m_Height(height), m_Title(title) { InitGLFW(); }
+: m_Width(width), m_Height(height), m_Title(title) { InitGlfw(); }
 
 bool Window::isOpen()
 {

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EB6742A2E2FD2C800B7049D /* window.hpp */; };
 		3EB6742F2E2FD4C800B7049D /* window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6742E2E2FD4C400B7049D /* window.mm */; };
+		3ED275E02E30D3C1008F51BA /* texture-2D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3ED275DF2E30D3BD008F51BA /* texture-2D.hpp */; };
+		3ED275E22E30D448008F51BA /* texture-2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3ED275E12E30D440008F51BA /* texture-2D.mm */; };
 		3EDC0BB12E2F822D00A33DAE /* application.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE12E2F70EE00A33DAE /* application.mm */; };
 		3EDC0BB22E2F822D00A33DAE /* renderer-2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE62E2F70EE00A33DAE /* renderer-2D.mm */; };
 		3EDC0BB32E2F822D00A33DAE /* mtl_implementation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE92E2F70EE00A33DAE /* mtl_implementation.mm */; };
@@ -53,6 +55,8 @@
 /* Begin PBXFileReference section */
 		3EB6742A2E2FD2C800B7049D /* window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = window.hpp; sourceTree = "<group>"; };
 		3EB6742E2E2FD4C400B7049D /* window.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = window.mm; sourceTree = "<group>"; };
+		3ED275DF2E30D3BD008F51BA /* texture-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "texture-2D.hpp"; sourceTree = "<group>"; };
+		3ED275E12E30D440008F51BA /* texture-2D.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "texture-2D.mm"; sourceTree = "<group>"; };
 		3EDC0AE02E2F70EE00A33DAE /* application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = application.hpp; sourceTree = "<group>"; };
 		3EDC0AE12E2F70EE00A33DAE /* application.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = application.mm; sourceTree = "<group>"; };
 		3EDC0AE52E2F70EE00A33DAE /* renderer-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "renderer-2D.hpp"; sourceTree = "<group>"; };
@@ -213,6 +217,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		3ED275D42E30D1B3008F51BA /* utils */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = utils;
+			sourceTree = "<group>";
+		};
+		3ED275DB2E30D261008F51BA /* stbi */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = stbi;
+			sourceTree = "<group>";
+		};
 		3EDC0BC02E2F835300A33DAE /* molten.app */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = molten.app;
@@ -286,6 +300,8 @@
 		3EDC0AE82E2F70EE00A33DAE /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				3ED275E12E30D440008F51BA /* texture-2D.mm */,
+				3ED275DF2E30D3BD008F51BA /* texture-2D.hpp */,
 				3EDC0AE52E2F70EE00A33DAE /* renderer-2D.hpp */,
 				3EDC0AE62E2F70EE00A33DAE /* renderer-2D.mm */,
 			);
@@ -295,6 +311,7 @@
 		3EDC0AEA2E2F70EE00A33DAE /* core */ = {
 			isa = PBXGroup;
 			children = (
+				3ED275D42E30D1B3008F51BA /* utils */,
 				3EDC0AE22E2F70EE00A33DAE /* application */,
 				3EDC0AE82E2F70EE00A33DAE /* renderer */,
 				3EDC0AE92E2F70EE00A33DAE /* mtl_implementation.mm */,
@@ -535,6 +552,7 @@
 		3EDC0B8F2E2F70EE00A33DAE /* third_party */ = {
 			isa = PBXGroup;
 			children = (
+				3ED275DB2E30D261008F51BA /* stbi */,
 				3EDC0AFD2E2F70EE00A33DAE /* glfw */,
 				3EDC0B8E2E2F70EE00A33DAE /* metal-cpp */,
 			);
@@ -562,6 +580,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */,
+				3ED275E02E30D3C1008F51BA /* texture-2D.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +598,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3ED275D42E30D1B3008F51BA /* utils */,
+				3ED275DB2E30D261008F51BA /* stbi */,
 			);
 			name = molten.lib;
 			packageProductDependencies = (
@@ -656,6 +679,7 @@
 				3EB6742F2E2FD4C800B7049D /* window.mm in Sources */,
 				3EDC0BB22E2F822D00A33DAE /* renderer-2D.mm in Sources */,
 				3EDC0BB32E2F822D00A33DAE /* mtl_implementation.mm in Sources */,
+				3ED275E22E30D448008F51BA /* texture-2D.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
