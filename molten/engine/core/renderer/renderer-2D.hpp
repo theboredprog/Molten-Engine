@@ -25,6 +25,7 @@
 #include <random>
 
 #include "sprite-2D.hpp"
+#include "../maths/matrix.hpp"
 
 namespace MTL
 {
@@ -35,6 +36,7 @@ namespace MTL
     class CommandBuffer;
     class Device;
     class SamplerState;
+    class Buffer;
 }
 
 namespace CA
@@ -63,6 +65,9 @@ private:
     std::vector<Sprite2D*> m_Queue;
     std::unordered_set<unsigned int> s_UsedIds;
     std::mt19937 s_Rng;
+    
+    simd::float4x4 m_OrthoProjMatrix;
+    MTL::Buffer* m_OrthoProjBuffer = nullptr;
     
 public:
     

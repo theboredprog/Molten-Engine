@@ -20,45 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <simd/simd.h>
+#include "matrix.hpp"
 
-#include "application.hpp"
-#include "../renderer/renderer-2D.hpp"
-#include "window.hpp"
-#include "../utils/logger.hpp"
-#include "../utils/log-macros.hpp"
-
-Application::Application(unsigned int width, unsigned int height, const char* title)
-: m_Window(new Window(width, height, title))
+simd::float4x4 Ortho(float left, float right, float bottom, float top)
 {
-    Logger::Init();
-    
-    m_Renderer2D = new Renderer2D(m_Window);
-}
+    float rl = right - left;
+    float tb = top - bottom;
+    float tx = -(right + left) / rl;
+    float ty = -(top + bottom) / tb;
 
-bool Application::Init()
-{
-    return true;
-}
-
-void Application::Run()
-{
-    m_Renderer2D->PrepareRenderingData();
-    
-    while (m_Window->isOpen())
-    {
-        @autoreleasepool
-        {
-            m_Renderer2D->IssueRenderCall();
-        }
-        
-        m_Window->HandleInputEvents();
-    }
-}
-
-Application::~Application()
-{
-    if (m_Renderer2D) delete m_Renderer2D;
-    
-    if(m_Window) delete m_Window;
+    return simd::float4x4(
+      simd::float4{2.0f / rl, 0.0f,       0.0f, 0.0f}, // Column 0
+      simd::float4{0.0f,       2.0f / tb, 0.0f, 0.0f}, // Column 1
+      simd::float4{0.0f,       0.0f,       1.0f, 0.0f}, // Column 2
+      simd::float4{tx,         ty,         0.0f, 1.0f}  // Column 3
+    );
 }

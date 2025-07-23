@@ -35,6 +35,7 @@
 #include "window.hpp"
 
 #include "../utils/log-macros.hpp"
+#include "application.hpp"
 
 void glfwErrorCallback(int error, const char* description)
 {

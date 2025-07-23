@@ -58,6 +58,10 @@ public:
     
     void Close();
     
+    inline unsigned int GetWidth() { return m_Width; }
+    
+    inline unsigned int GetHeight() { return m_Height; }
+    
     inline GLFWwindow* GetInternalWindow() { return m_InternalWindow; }
     
     inline NSWindow* GetMetalWindow() { return m_MetalWindow; }

@@ -31,6 +31,7 @@
 #include "../application/window.hpp"
 #include "vertex-data-2D.hpp"
 #include "../utils/log-macros.hpp"
+#include "../application/window.hpp"
 
 Renderer2D::Renderer2D(Window* window)
 : m_Window(window), m_MetalDefaultLibrary(nullptr), m_MetalCommandQueue(nullptr), m_MetalRenderPSO(nullptr), m_MetalDrawable(nullptr), m_MetalCommandBuffer(nullptr) { s_Rng.seed(std::random_device{}()); }
@@ -107,6 +108,15 @@ void Renderer2D::PrepareRenderingData()
 
         if (!m_VertexBuffers[i]) { LOG_CORE_ERROR("Failed to create Metal buffer for sprite index {}", i); return; }
     }
+    
+    if (m_OrthoProjBuffer)
+        m_OrthoProjBuffer->release();
+
+    // Create your ortho matrix (use full window size, no /2 unless intentional)
+    m_OrthoProjMatrix = Ortho(0.0f, m_Window->GetWidth(), 0.0f, m_Window->GetHeight());
+
+    // Create Metal buffer with the matrix's raw data address, NOT the matrix itself
+    m_OrthoProjBuffer = device->newBuffer(&m_OrthoProjMatrix, sizeof(simd::float4x4), MTL::ResourceStorageModeShared);
 
     if (m_MetalDefaultLibrary) { m_MetalDefaultLibrary->release(); m_MetalDefaultLibrary = nullptr; }
 
@@ -226,6 +236,8 @@ void Renderer2D::IssueRenderCall()
         NS::UInteger vertexCount = 6;
         NS::UInteger vertexStart = 0;
 
+        encoder->setVertexBuffer(m_OrthoProjBuffer, 0, 1);
+        
         for (size_t i = 0; i < m_Queue.size(); i++)
         {
             if (!m_VertexBuffers[i]) continue;
@@ -267,7 +279,7 @@ Renderer2D::~Renderer2D()
         delete sprite;
 
     m_Queue.clear();
-
+    
     if (m_MetalRenderPSO) { m_MetalRenderPSO->release(); m_MetalRenderPSO = nullptr; }
     if (m_MetalCommandQueue) { m_MetalCommandQueue->release(); m_MetalCommandQueue = nullptr; }
     if (m_MetalDefaultLibrary) { m_MetalDefaultLibrary->release(); m_MetalDefaultLibrary = nullptr; }

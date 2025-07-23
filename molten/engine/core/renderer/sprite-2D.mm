@@ -26,31 +26,38 @@
 #include "sprite-2D.hpp"
 #include "../utils/log-macros.hpp"
 
-Sprite2D::Sprite2D(simd::float2 position, const char* filepath)
-    : m_Position(position), m_Color{1.0f, 1.0f, 1.0f, 1.0f}, m_Texture(nullptr), m_VertexData(new VertexData2D[6])
+Sprite2D::Sprite2D(simd::float2 position,
+                   simd::float2 scale,
+                   float rotation,
+                   const char* filepath)
+    : m_Position(position), m_Color{1.0f, 1.0f, 1.0f, 1.0f},
+      m_Scale(scale), m_Rotation(rotation), m_Texture(nullptr),
+      m_VertexData(new VertexData2D[6])
 {
-    if (filepath && *filepath != '\0') m_Texture = new Texture2D(filepath);
+    if (filepath && *filepath != '\0')
+        m_Texture = new Texture2D(filepath);
 
     CreateVertexData();
 }
 
-Sprite2D::Sprite2D(simd::float2 position, simd::float4 color, const char* filepath)
-    : m_Position(position), m_Color(color), m_Texture(nullptr), m_VertexData(new VertexData2D[6])
+Sprite2D::Sprite2D(simd::float2 position,
+                   simd::float4 color,
+                   simd::float2 scale,
+                   float rotation,
+                   const char* filepath)
+    : m_Position(position), m_Color(color),
+      m_Scale(scale), m_Rotation(rotation), m_Texture(nullptr),
+      m_VertexData(new VertexData2D[6])
 {
-    if (filepath && *filepath != '\0') m_Texture = new Texture2D(filepath);
+    if (filepath && *filepath != '\0')
+        m_Texture = new Texture2D(filepath);
 
     CreateVertexData();
-}
-
-Sprite2D::~Sprite2D()
-{
-    if (m_Texture) delete m_Texture;
-    
-    delete[] m_VertexData;
 }
 
 void Sprite2D::CreateVertexData()
 {
+    // Quad base vertices (unit square centered at origin)
     simd::float3 posOffsets[6] =
     {
         {-0.5f, -0.5f, 0.0f},
@@ -67,14 +74,32 @@ void Sprite2D::CreateVertexData()
         {0.0f, 0.0f}, {1.0f, 1.0f}, {1.0f, 0.0f}
     };
 
+    // Add these members to your Sprite2D class:
+    // simd::float2 m_Scale = {100.0f, 100.0f}; // default scale in pixels
+    // float m_Rotation = 0.0f; // rotation in radians
+
+    float cosAngle = cos(m_Rotation);
+    float sinAngle = sin(m_Rotation);
+
     for (int i = 0; i < 6; i++)
     {
-        simd::float3 offset = simd::make_float3(m_Position, 0.0f);
-        
-        m_VertexData[i].position = posOffsets[i] + offset;
-        
+        // Rotate
+        float rotatedX = posOffsets[i].x * cosAngle - posOffsets[i].y * sinAngle;
+        float rotatedY = posOffsets[i].x * sinAngle + posOffsets[i].y * cosAngle;
+
+        // Scale and translate to position
+        float finalX = m_Position.x + rotatedX * m_Scale.x;
+        float finalY = m_Position.y + rotatedY * m_Scale.y;
+
+        m_VertexData[i].position = simd::float3{finalX, finalY, 0.0f};
         m_VertexData[i].texCoord = texCoords[i];
         m_VertexData[i].color = m_Color;
     }
 }
 
+Sprite2D::~Sprite2D()
+{
+    if (m_Texture) delete m_Texture;
+    
+    delete[] m_VertexData;
+}

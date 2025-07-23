@@ -7,16 +7,22 @@ struct VertexIn {
     float4 color    [[attribute(2)]];
 };
 
+struct Uniforms {
+    float4x4 projectionMatrix;
+};
+
 struct VertexOut {
     float4 position [[position]];
     float2 texCoord;
     float4 color;
 };
 
-vertex VertexOut vertexShader(VertexIn in [[stage_in]])
+vertex VertexOut vertexShader(VertexIn in [[stage_in]],
+                              constant Uniforms& uniforms [[buffer(1)]])
 {
     VertexOut out;
-    out.position = float4(in.position, 1.0);
+    float4 worldPos = float4(in.position, 1.0);
+    out.position = uniforms.projectionMatrix * worldPos;
     out.texCoord = in.texCoord;
     out.color = in.color;
     return out;

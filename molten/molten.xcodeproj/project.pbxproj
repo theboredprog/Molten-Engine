@@ -88,6 +88,11 @@
 			path = third_party;
 			sourceTree = SOURCE_ROOT;
 		};
+		3E97E05D2E316CB20076A552 /* maths */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = maths;
+			sourceTree = "<group>";
+		};
 		3ED275D42E30D1B3008F51BA /* utils */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = utils;
@@ -188,6 +193,7 @@
 		3EDC0AEA2E2F70EE00A33DAE /* core */ = {
 			isa = PBXGroup;
 			children = (
+				3E97E05D2E316CB20076A552 /* maths */,
 				3E2D1DAB2E314E4C002F6589 /* molten.hpp */,
 				3ED275D42E30D1B3008F51BA /* utils */,
 				3EDC0AE22E2F70EE00A33DAE /* application */,
@@ -251,6 +257,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				3E97DF682E316AFB0076A552 /* third_party */,
+				3E97E05D2E316CB20076A552 /* maths */,
 				3ED275D42E30D1B3008F51BA /* utils */,
 			);
 			name = molten.lib;

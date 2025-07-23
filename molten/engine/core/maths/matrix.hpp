@@ -22,43 +22,4 @@
 
 #include <simd/simd.h>
 
-#include "application.hpp"
-#include "../renderer/renderer-2D.hpp"
-#include "window.hpp"
-#include "../utils/logger.hpp"
-#include "../utils/log-macros.hpp"
-
-Application::Application(unsigned int width, unsigned int height, const char* title)
-: m_Window(new Window(width, height, title))
-{
-    Logger::Init();
-    
-    m_Renderer2D = new Renderer2D(m_Window);
-}
-
-bool Application::Init()
-{
-    return true;
-}
-
-void Application::Run()
-{
-    m_Renderer2D->PrepareRenderingData();
-    
-    while (m_Window->isOpen())
-    {
-        @autoreleasepool
-        {
-            m_Renderer2D->IssueRenderCall();
-        }
-        
-        m_Window->HandleInputEvents();
-    }
-}
-
-Application::~Application()
-{
-    if (m_Renderer2D) delete m_Renderer2D;
-    
-    if(m_Window) delete m_Window;
-}
+simd::float4x4 Ortho(float left, float right, float bottom, float top);

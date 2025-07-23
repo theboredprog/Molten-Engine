@@ -29,32 +29,42 @@ struct VertexData2D;
 class Sprite2D
 {
 private:
-    
     unsigned int m_Id;
-    
     simd::float2 m_Position;
     simd::float4 m_Color;
-    
+    simd::float2 m_Scale;
+    float m_Rotation;
     Texture2D* m_Texture = nullptr;
     VertexData2D* m_VertexData = nullptr;
 
     void CreateVertexData();
 
 public:
-    
-    Sprite2D(simd::float2 position, const char* filepath = nullptr);
-    Sprite2D(simd::float2 position,simd::float4 color, const char* filepath = nullptr);
+    // Constructor with position, optional scale and rotation, and optional filepath
+    Sprite2D(simd::float2 position,
+             simd::float2 scale = {100.0f, 100.0f},
+             float rotation = 0.0f,
+             const char* filepath = nullptr);
+
+    // Constructor with position, color, optional scale and rotation, and optional filepath
+    Sprite2D(simd::float2 position,
+             simd::float4 color,
+             simd::float2 scale = {100.0f, 100.0f},
+             float rotation = 0.0f,
+             const char* filepath = nullptr);
 
     void SetId(unsigned int id) { m_Id = id; }
     void SetPosition(const simd::float2& pos) { m_Position = pos; CreateVertexData(); }
+    void SetScale(const simd::float2& scale) { m_Scale = scale; CreateVertexData(); }
+    void SetRotation(float radians) { m_Rotation = radians; CreateVertexData(); }
     void SetColor(const simd::float4& color) { m_Color = color; CreateVertexData(); }
-    
+
     unsigned int GetId() const { return m_Id; }
     simd::float2 GetPosition() const { return m_Position; }
     simd::float4 GetColor() const { return m_Color; }
 
     Texture2D* GetTexture() const { return m_Texture; }
     VertexData2D* GetData() const { return m_VertexData; }
-    
+
     ~Sprite2D();
 };
