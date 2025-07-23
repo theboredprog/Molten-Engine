@@ -28,7 +28,7 @@ std::shared_ptr<spdlog::logger> Logger::s_ClientLogger;
 
 void Logger::Init()
 {
-    spdlog::set_pattern("%^[%T] %n: %v%$"); // Color, timestamp, logger name, message
+    spdlog::set_pattern("[MOLTEN-ENGINE] %^[%T] %n: %v%$"); // Color, timestamp, logger name, message
 
     s_CoreLogger = spdlog::stdout_color_mt("CORE");
     s_CoreLogger->set_level(spdlog::level::trace);

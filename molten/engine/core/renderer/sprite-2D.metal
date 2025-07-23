@@ -1,0 +1,42 @@
+#include <metal_stdlib>
+using namespace metal;
+
+struct VertexIn {
+    float3 position [[attribute(0)]];
+    float2 texCoord [[attribute(1)]];
+    float4 color    [[attribute(2)]];
+};
+
+struct VertexOut {
+    float4 position [[position]];
+    float2 texCoord;
+    float4 color;
+};
+
+vertex VertexOut vertexShader(VertexIn in [[stage_in]])
+{
+    VertexOut out;
+    out.position = float4(in.position, 1.0);
+    out.texCoord = in.texCoord;
+    out.color = in.color;
+    return out;
+}
+
+fragment float4 fragmentShader(VertexOut in [[stage_in]],
+                               texture2d<float> spriteTexture [[texture(0)]],
+                               sampler spriteSampler [[sampler(0)]])
+{
+    if (spriteTexture.get_width() == 0) {
+        // No texture bound, output vertex color only
+        return in.color;
+    }
+
+    float4 texColor = spriteTexture.sample(spriteSampler, in.texCoord);
+
+    // If texture sample is fully transparent (alpha == 0), fallback to vertex color
+    if (texColor.a == 0.0) {
+        return in.color;
+    }
+
+    return texColor * in.color;
+}
