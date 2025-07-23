@@ -58,7 +58,7 @@ void Application::Run()
                 {
                     m_LastWidth = width;
                     m_LastHeight = height;
-                    m_Renderer2D->UpdateProjectionMatrix(width,height);
+                    m_Renderer2D->UpdateProjMatrix(width,height);
                 }
 
                 m_Renderer2D->IssueRenderCall();

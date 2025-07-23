@@ -77,27 +77,22 @@ void Renderer2D::RemoveSprite(Sprite2D* sprite)
     }
 }
 
-void Renderer2D::UpdateProjectionMatrix(unsigned int width, unsigned int height)
+void Renderer2D::UpdateProjMatrix(unsigned int width, unsigned int height)
 {
     if (!m_Window) return;
     
     auto device = m_Window->GetMetalDevice();
     if (!device) return;
 
-    // Release old buffer if exists
-    if (m_OrthoProjBuffer)
+    if (m_ProjBuffer)
     {
-        m_OrthoProjBuffer->release();
-        m_OrthoProjBuffer = nullptr;
+        m_ProjBuffer->release();
+        m_ProjBuffer = nullptr;
     }
 
-    // Create new orthographic matrix for current window size
-    m_OrthoProjMatrix = Ortho(0.0f, width, 0.0f, height);
+    m_ProjMatrix = Ortho(0.0f, width, 0.0f, height);
 
-    // Create new Metal buffer with the updated matrix
-    m_OrthoProjBuffer = device->newBuffer(&m_OrthoProjMatrix, sizeof(simd::float4x4), MTL::ResourceStorageModeShared);
-    
-    LOG_CORE_INFO("Updating ortho matrix, new width: {} new height: {}", width, height);
+    m_ProjBuffer = device->newBuffer(&m_ProjMatrix, sizeof(simd::float4x4), MTL::ResourceStorageModeShared);
 }
 
 
@@ -133,7 +128,7 @@ void Renderer2D::PrepareRenderingData()
         if (!m_VertexBuffers[i]) { LOG_CORE_ERROR("Failed to create Metal buffer for sprite index {}", i); return; }
     }
     
-    UpdateProjectionMatrix(m_Window->GetWidth(), m_Window->GetHeight());
+    UpdateProjMatrix(m_Window->GetWidth(), m_Window->GetHeight());
 
     if (m_MetalDefaultLibrary) { m_MetalDefaultLibrary->release(); m_MetalDefaultLibrary = nullptr; }
 
@@ -253,17 +248,17 @@ void Renderer2D::IssueRenderCall()
         NS::UInteger vertexCount = 6;
         NS::UInteger vertexStart = 0;
 
-        encoder->setVertexBuffer(m_OrthoProjBuffer, 0, 1);
+        encoder->setVertexBuffer(m_ProjBuffer, 0, 1);
         
         for (size_t i = 0; i < m_Queue.size(); i++)
         {
             if (!m_VertexBuffers[i]) continue;
 
             encoder->setVertexBuffer(m_VertexBuffers[i], 0, 0);
-
-            auto texture = m_Queue[i]->GetTexture()->GetMetalTexture();
             
-            if (texture) encoder->setFragmentTexture(texture, 0);
+            auto tex = m_Queue[i]->GetTexture();
+            
+            if (tex) encoder->setFragmentTexture(tex->GetMetalTexture(), 0);
             
             else encoder->setFragmentTexture(nullptr, 0);
             

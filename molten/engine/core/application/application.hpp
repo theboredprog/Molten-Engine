@@ -43,13 +43,13 @@ private:
     
 public:
     
-    Application(unsigned int width, unsigned int height, const char* title);
+    explicit Application(unsigned int width, unsigned int height, const char* title);
     
     bool Init();
     
     void Run();
     
-    inline Renderer2D* GetRenderer2D() { return m_Renderer2D; }
+    inline Renderer2D* GetRenderer2D() const { return m_Renderer2D; }
     
     ~Application();
 };

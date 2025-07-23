@@ -36,11 +36,11 @@ private:
     MTL::Texture* m_MetalTexture = nullptr;
     
 public:
-    Texture2D(const char* filepath);
+    explicit Texture2D(const char* filepath);
     
     void SetMetalDevice(MTL::Device* metalDevice);
     
-    inline Image* GetImage() const { return m_Image; }
+    inline const Image* GetImage() const { return m_Image; }
     inline MTL::Texture* GetMetalTexture() const { return m_MetalTexture; }
     
     ~Texture2D();

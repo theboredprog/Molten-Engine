@@ -58,30 +58,31 @@ private:
     MTL::CommandBuffer* m_MetalCommandBuffer = nullptr;
     MTL::SamplerState* m_MetalSamplerState = nullptr;
     
-    Window* m_Window = nullptr;
-    
     std::vector<MTL::Buffer*> m_VertexBuffers;
+    simd::float4x4 m_ProjMatrix;
+    MTL::Buffer* m_ProjBuffer = nullptr;
     
     std::vector<Sprite2D*> m_Queue;
     std::unordered_set<unsigned int> s_UsedIds;
     std::mt19937 s_Rng;
     
-    simd::float4x4 m_OrthoProjMatrix;
-    MTL::Buffer* m_OrthoProjBuffer = nullptr;
+    Window* m_Window = nullptr;
     
 public:
     
-    Renderer2D(Window* window);
+    explicit Renderer2D(Window* window);
     
     void AddSprite(Sprite2D* sprite);
     
     void RemoveSprite(Sprite2D* sprite);
     
-    void UpdateProjectionMatrix(unsigned int width, unsigned int height);
+    void UpdateProjMatrix(unsigned int width, unsigned int height);
     
     void PrepareRenderingData();
     
     void IssueRenderCall();
+    
+    Window* GetWindow() const { return m_Window; }
     
     ~Renderer2D();
 };

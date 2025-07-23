@@ -50,7 +50,7 @@ private:
     
 public:
     
-    Window(unsigned int width, unsigned int height, const char* title);
+    explicit Window(unsigned int width, unsigned int height, const char* title);
     
     bool isOpen();
     
@@ -58,17 +58,17 @@ public:
     
     void Close();
     
-    inline unsigned int GetWidth() { return m_Width; }
+    inline unsigned int GetWidth() const { return m_Width; }
     
-    inline unsigned int GetHeight() { return m_Height; }
+    inline unsigned int GetHeight() const { return m_Height; }
     
-    inline GLFWwindow* GetInternalWindow() { return m_InternalWindow; }
+    inline GLFWwindow* GetInternalWindow() const { return m_InternalWindow; }
     
-    inline NSWindow* GetMetalWindow() { return m_MetalWindow; }
+    inline NSWindow* GetMetalWindow() const { return m_MetalWindow; }
     
-    inline MTL::Device* GetMetalDevice() { return m_MetalDevice; }
+    inline MTL::Device* GetMetalDevice() const { return m_MetalDevice; }
     
-    inline CA::MetalLayer* GetMetalLayer() { return m_MetalLayer; }
+    inline CA::MetalLayer* GetMetalLayer() const { return m_MetalLayer; }
 
     inline void SetMetalDevice(MTL::Device* device) { m_MetalDevice = device; }
 
