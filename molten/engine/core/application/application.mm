@@ -45,6 +45,8 @@ bool Application::Init()
 
 void Application::Run()
 {
+    m_Renderer2D->PrepareRenderingData();
+    
     while (m_Window->isOpen())
     {
         @autoreleasepool
