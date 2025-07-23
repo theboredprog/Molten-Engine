@@ -48,15 +48,15 @@ class Renderer2D
 {
 private:
     
-    MTL::Library* m_MetalDefaultLibrary;
-    MTL::CommandQueue* m_MetalCommandQueue;
-    MTL::RenderPipelineState* m_MetalRenderPSO;
+    MTL::Library* m_MetalDefaultLibrary = nullptr;
+    MTL::CommandQueue* m_MetalCommandQueue = nullptr;
+    MTL::RenderPipelineState* m_MetalRenderPSO = nullptr;
     
-    CA::MetalDrawable* m_MetalDrawable;
-    MTL::CommandBuffer* m_MetalCommandBuffer;
+    CA::MetalDrawable* m_MetalDrawable = nullptr;
+    MTL::CommandBuffer* m_MetalCommandBuffer = nullptr;
     MTL::SamplerState* m_MetalSamplerState = nullptr;
     
-    Window* m_Window;
+    Window* m_Window = nullptr;
     
     std::vector<MTL::Buffer*> m_VertexBuffers;
     
@@ -72,7 +72,7 @@ public:
     
     void RemoveSprite(Sprite2D* sprite);
     
-    void ProcessRenderingData();
+    void PrepareRenderingData();
     
     void IssueRenderCall();
     

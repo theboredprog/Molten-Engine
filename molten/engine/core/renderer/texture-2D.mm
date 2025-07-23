@@ -22,7 +22,7 @@
 #include "texture-2D.hpp"
 
 Texture2D::Texture2D(const char* filepath)
-    :m_Image(new Image(filepath))
+    : m_Image(new Image(filepath))
 {
     m_Image = new Image(filepath);
 
@@ -30,15 +30,14 @@ Texture2D::Texture2D(const char* filepath)
     {
         delete m_Image;
         m_Image = nullptr;
-        m_MetalTexture = nullptr; // Important: signal no texture created
+        m_MetalTexture = nullptr;
         std::cerr << "[WARN] Texture2D: Image loading failed, texture not created\n";
     }
 }
 
 void Texture2D::SetMetalDevice(MTL::Device* metalDevice)
 {
-    if (!m_Image)
-            return;  // no valid image, skip texture creation
+    if (!m_Image) return;
     
     MTL::TextureDescriptor* textureDescriptor = MTL::TextureDescriptor::alloc()->init();
     
@@ -58,10 +57,7 @@ void Texture2D::SetMetalDevice(MTL::Device* metalDevice)
 
 Texture2D::~Texture2D()
 {
-    if(m_Image)
-    {
-        delete m_Image;
-    }
+    if(m_Image) delete m_Image;
     
     m_MetalTexture->release();
 }

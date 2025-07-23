@@ -31,17 +31,17 @@ namespace MTL
 class Texture2D
 {
 private:
-    Image* m_Image;
+    Image* m_Image = nullptr;
     
-    MTL::Texture* m_MetalTexture;
+    MTL::Texture* m_MetalTexture = nullptr;
     
 public:
     Texture2D(const char* filepath);
     
     void SetMetalDevice(MTL::Device* metalDevice);
     
-    inline Image* GetImage() { return m_Image; }
-    inline MTL::Texture* GetMetalTexture() { return m_MetalTexture; }
+    inline Image* GetImage() const { return m_Image; }
+    inline MTL::Texture* GetMetalTexture() const { return m_MetalTexture; }
     
     ~Texture2D();
 };

@@ -33,29 +33,28 @@ private:
     unsigned int m_Id;
     
     simd::float2 m_Position;
-    simd::float4 m_Color;          // store color (RGBA)
+    simd::float4 m_Color;
     
-    Texture2D* m_Texture;
-    VertexData2D* m_Data;
+    Texture2D* m_Texture = nullptr;
+    VertexData2D* m_VertexData = nullptr;
 
-    void UpdateVertexData();       // call after position or color change
+    void CreateVertexData();
 
 public:
     
-    Sprite2D(simd::float2 position, const char* filepath = nullptr);  // allow nullptr texture
+    Sprite2D(simd::float2 position, const char* filepath = nullptr);
     Sprite2D(simd::float2 position,simd::float4 color, const char* filepath = nullptr);
 
     void SetId(unsigned int id) { m_Id = id; }
+    void SetPosition(const simd::float2& pos) { m_Position = pos; CreateVertexData(); }
+    void SetColor(const simd::float4& color) { m_Color = color; CreateVertexData(); }
+    
     unsigned int GetId() const { return m_Id; }
-
     simd::float2 GetPosition() const { return m_Position; }
-    void SetPosition(const simd::float2& pos) { m_Position = pos; UpdateVertexData(); }
-
     simd::float4 GetColor() const { return m_Color; }
-    void SetColor(const simd::float4& color) { m_Color = color; UpdateVertexData(); }
 
     Texture2D* GetTexture() const { return m_Texture; }
-    VertexData2D* GetData() const { return m_Data; }
+    VertexData2D* GetData() const { return m_VertexData; }
     
     ~Sprite2D();
 };

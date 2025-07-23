@@ -33,30 +33,27 @@
 #include "vertex-data-2D.hpp"
 
 Renderer2D::Renderer2D(Window* window)
-    : m_Window(window), m_MetalDefaultLibrary(nullptr),
-      m_MetalCommandQueue(nullptr), m_MetalRenderPSO(nullptr),
-      m_MetalDrawable(nullptr), m_MetalCommandBuffer(nullptr)
-{
-    s_Rng.seed(std::random_device{}());
-}
+: m_Window(window), m_MetalDefaultLibrary(nullptr), m_MetalCommandQueue(nullptr), m_MetalRenderPSO(nullptr), m_MetalDrawable(nullptr), m_MetalCommandBuffer(nullptr) { s_Rng.seed(std::random_device{}()); }
 
 void Renderer2D::AddSprite(Sprite2D* sprite)
 {
     if (!sprite) return;
 
     std::uniform_int_distribution<unsigned int> dist(1, 0xFFFFFFFE);
-    unsigned int id;
+    
+    unsigned int sprite_id;
 
     do
     {
-        id = dist(s_Rng);
-    } while (s_UsedIds.find(id) != s_UsedIds.end());
+        sprite_id = dist(s_Rng);
+    } while (s_UsedIds.find(sprite_id) != s_UsedIds.end());
 
-    s_UsedIds.insert(id);
+    s_UsedIds.insert(sprite_id);
 
-    sprite->SetId(id);
+    sprite->SetId(sprite_id);
 
     m_Queue.push_back(sprite);
+    
     m_VertexBuffers.push_back(nullptr);
 }
 
@@ -79,44 +76,26 @@ void Renderer2D::RemoveSprite(Sprite2D* sprite)
     }
 }
 
-void Renderer2D::ProcessRenderingData()
+void Renderer2D::PrepareRenderingData()
 {
-    if (!m_Window)
-    {
-        std::cerr << "[ERROR] Window pointer is null." << std::endl;
-        return;
-    }
+    if (!m_Window) { std::cerr << "[ERROR] Window pointer is null." << std::endl; return; }
 
     auto device = m_Window->GetMetalDevice();
-    if (!device)
-    {
-        std::cerr << "[ERROR] Metal device is null." << std::endl;
-        return;
-    }
+    if (!device) { std::cerr << "[ERROR] Metal device is null." << std::endl; return; }
 
     for (size_t i = 0; i < m_Queue.size(); i++)
     {
         Sprite2D* sprite = m_Queue[i];
-        if (!sprite)
-        {
-            std::cerr << "[WARNING] Null sprite at index " << i << std::endl;
-            continue;
-        }
+        if (!sprite) { std::cerr << "[WARNING] Null sprite at index " << i << std::endl; continue; }
         
         auto texture = m_Queue[i]->GetTexture();
-        if (texture) {
-            texture->SetMetalDevice(device);
-        } else {
-            // Optionally log or handle fallback
-            std::cerr << "[WARNING] Sprite texture null at index " << i << std::endl;
-        }
+        
+        if (texture) texture->SetMetalDevice(device);
+        
+        else std::cerr << "[WARNING] Sprite texture null at index " << i << std::endl;
 
         auto vertexData = sprite->GetData();
-        if (!vertexData)
-        {
-            std::cerr << "[WARNING] Null vertex data for sprite at index " << i << std::endl;
-            continue;
-        }
+        if (!vertexData) { std::cerr << "[WARNING] Null vertex data for sprite at index " << i << std::endl; continue; }
 
         if (m_VertexBuffers[i])
         {
@@ -124,59 +103,27 @@ void Renderer2D::ProcessRenderingData()
             m_VertexBuffers[i] = nullptr;
         }
 
-        m_VertexBuffers[i] = device->newBuffer(
-            vertexData,
-            sizeof(VertexData2D) * 6,
-            MTL::ResourceStorageModeShared
-        );
+        m_VertexBuffers[i] = device->newBuffer(vertexData, sizeof(VertexData2D) * 6, MTL::ResourceStorageModeShared);
 
-        if (!m_VertexBuffers[i])
-        {
-            std::cerr << "[ERROR] Failed to create Metal buffer for sprite index " << i << std::endl;
-            return;
-        }
+        if (!m_VertexBuffers[i]) { std::cerr << "[ERROR] Failed to create Metal buffer for sprite index " << i << std::endl; return; }
     }
 
-    if (m_MetalDefaultLibrary)
-    {
-        m_MetalDefaultLibrary->release();
-        m_MetalDefaultLibrary = nullptr;
-    }
+    if (m_MetalDefaultLibrary) { m_MetalDefaultLibrary->release(); m_MetalDefaultLibrary = nullptr; }
 
     m_MetalDefaultLibrary = device->newDefaultLibrary();
-    if (!m_MetalDefaultLibrary)
-    {
-        std::cerr << "[ERROR] Failed to load Metal default library." << std::endl;
-        return;
-    }
+    if (!m_MetalDefaultLibrary) { std::cerr << "[ERROR] Failed to load Metal default library." << std::endl; return; }
 
-    if (m_MetalCommandQueue)
-    {
-        m_MetalCommandQueue->release();
-        m_MetalCommandQueue = nullptr;
-    }
+    if (m_MetalCommandQueue) { m_MetalCommandQueue->release(); m_MetalCommandQueue = nullptr; }
 
     m_MetalCommandQueue = device->newCommandQueue();
-    if (!m_MetalCommandQueue)
-    {
-        std::cerr << "[ERROR] Failed to create Metal command queue." << std::endl;
-        return;
-    }
+    if (!m_MetalCommandQueue) { std::cerr << "[ERROR] Failed to create Metal command queue." << std::endl; return; }
 
     auto vertexShader = m_MetalDefaultLibrary->newFunction(NS::String::string("vertexShader", NS::UTF8StringEncoding));
     auto fragmentShader = m_MetalDefaultLibrary->newFunction(NS::String::string("fragmentShader", NS::UTF8StringEncoding));
 
-    if (!vertexShader || !fragmentShader)
-    {
-        std::cerr << "[ERROR] Shader function not found in Metal library." << std::endl;
-        return;
-    }
+    if (!vertexShader || !fragmentShader) { std::cerr << "[ERROR] Shader function not found in Metal library." << std::endl; return; }
 
-    if (m_MetalRenderPSO)
-    {
-        m_MetalRenderPSO->release();
-        m_MetalRenderPSO = nullptr;
-    }
+    if (m_MetalRenderPSO) { m_MetalRenderPSO->release(); m_MetalRenderPSO = nullptr; }
 
     MTL::RenderPipelineDescriptor* pipelineDescriptor = MTL::RenderPipelineDescriptor::alloc()->init();
     pipelineDescriptor->setLabel(NS::String::string("2D Rendering Pipeline", NS::ASCIIStringEncoding));
@@ -204,10 +151,8 @@ void Renderer2D::ProcessRenderingData()
     vertexDescriptor->layouts()->object(0)->setStepFunction(MTL::VertexStepFunctionPerVertex);
     vertexDescriptor->layouts()->object(0)->setStepRate(1);
 
-    // Assign to pipeline descriptor
     pipelineDescriptor->setVertexDescriptor(vertexDescriptor);
 
-    // Release descriptor when done
     vertexDescriptor->release();
 
 
@@ -215,7 +160,9 @@ void Renderer2D::ProcessRenderingData()
     m_MetalRenderPSO = device->newRenderPipelineState(pipelineDescriptor, &error);
 
     pipelineDescriptor->release();
+
     vertexShader->release();
+
     fragmentShader->release();
 
     if (!m_MetalRenderPSO)
@@ -231,6 +178,7 @@ void Renderer2D::ProcessRenderingData()
     }
 
     MTL::SamplerDescriptor* samplerDesc = MTL::SamplerDescriptor::alloc()->init();
+    
     samplerDesc->setMinFilter(MTL::SamplerMinMagFilterLinear);
     samplerDesc->setMagFilter(MTL::SamplerMinMagFilterLinear);
     samplerDesc->setMipFilter(MTL::SamplerMipFilterNotMipmapped);
@@ -238,13 +186,10 @@ void Renderer2D::ProcessRenderingData()
     samplerDesc->setTAddressMode(MTL::SamplerAddressModeClampToEdge);
     
     m_MetalSamplerState = device->newSamplerState(samplerDesc);
+    
     samplerDesc->release();
 
-    if (!m_MetalSamplerState)
-    {
-        std::cerr << "[ERROR] Failed to create Metal sampler state." << std::endl;
-        return;
-    }
+    if (!m_MetalSamplerState) { std::cerr << "[ERROR] Failed to create Metal sampler state." << std::endl; return; }
 }
 
 void Renderer2D::IssueRenderCall()
@@ -269,6 +214,7 @@ void Renderer2D::IssueRenderCall()
         MTL::RenderPassDescriptor* renderPassDescriptor = MTL::RenderPassDescriptor::alloc()->init();
 
         auto colorAttachment = renderPassDescriptor->colorAttachments()->object(0);
+        
         colorAttachment->setTexture(m_MetalDrawable->texture());
         colorAttachment->setLoadAction(MTL::LoadActionClear);
         colorAttachment->setClearColor(MTL::ClearColor(41.0f / 255.0f, 42.0f / 255.0f, 48.0f / 255.0f, 1.0f));
@@ -288,10 +234,10 @@ void Renderer2D::IssueRenderCall()
             encoder->setVertexBuffer(m_VertexBuffers[i], 0, 0);
 
             auto texture = m_Queue[i]->GetTexture()->GetMetalTexture();
-            if (texture)
-                encoder->setFragmentTexture(texture, 0);
-            else
-                encoder->setFragmentTexture(nullptr, 0); // optional: clear texture if null
+            
+            if (texture) encoder->setFragmentTexture(texture, 0);
+            
+            else encoder->setFragmentTexture(nullptr, 0);
             
             encoder->setFragmentSamplerState(m_MetalSamplerState, 0);
 
@@ -326,15 +272,7 @@ Renderer2D::~Renderer2D()
     if (m_MetalRenderPSO) { m_MetalRenderPSO->release(); m_MetalRenderPSO = nullptr; }
     if (m_MetalCommandQueue) { m_MetalCommandQueue->release(); m_MetalCommandQueue = nullptr; }
     if (m_MetalDefaultLibrary) { m_MetalDefaultLibrary->release(); m_MetalDefaultLibrary = nullptr; }
-    if (m_MetalSamplerState)
-    {
-        m_MetalSamplerState->release();
-        m_MetalSamplerState = nullptr;
-    }
+    if (m_MetalSamplerState) { m_MetalSamplerState->release(); m_MetalSamplerState = nullptr; }
 
-    if (m_Window && m_Window->GetMetalDevice())
-    {
-        m_Window->GetMetalDevice()->release();
-        m_Window->SetMetalDevice(nullptr);
-    }
+    if (m_Window && m_Window->GetMetalDevice()) { m_Window->GetMetalDevice()->release(); m_Window->SetMetalDevice(nullptr); }
 }
