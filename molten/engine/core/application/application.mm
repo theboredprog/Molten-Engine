@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 #include <iostream>
+#include <simd/simd.h>
 
 #include "application.hpp"
 #include "../renderer/renderer-2D.hpp"
@@ -29,11 +30,9 @@
 Application::Application(unsigned int width, unsigned int height, const char* title)
 : m_Window(new Window(width, height, title))
 {
-    m_Renderer = new Renderer2D();
+    m_Renderer2D = new Renderer2D(m_Window);
     
-    m_Renderer->Init(m_Window);
-
-    m_Renderer->PrepareRenderingData();
+    m_Renderer2D->AddSprite(new Sprite2D(simd::float2{0.0f,0.0f}, simd::float4{1.0f,0.0f,0.0f,1.0f}, "/Users/kriot/Documents/GitHub/Molten-Engine/molten/assets/texture.png"));
 }
 
 bool Application::Init()
@@ -47,23 +46,16 @@ void Application::Run()
     {
         @autoreleasepool
         {
-            m_Renderer->Render();
+            m_Renderer2D->IssueRenderCall();
         }
         
         m_Window->HandleInputEvents();
     }
 }
 
-void Application::Cleanup()
+Application::~Application()
 {
-    if (m_Renderer)
-    {
-        m_Renderer->Cleanup();
-        delete m_Renderer;
-    }
+    if (m_Renderer2D) delete m_Renderer2D;
     
-    if(m_Window)
-    {
-        delete m_Window;
-    }
+    if(m_Window) delete m_Window;
 }

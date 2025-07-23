@@ -36,7 +36,9 @@ public:
     
     Image(const char* filepath);
     
-    inline const char* GetFilepath() { return m_Filepath; }
+    inline const char* GetFilepath() { return m_Filepath; }
+    
+    bool IsValid() const { return m_Data != nullptr; }
     
     inline int GetWidth() { return m_Width; }
     inline int GetHeight() { return m_Height; }
@@ -44,5 +46,5 @@ public:
     
     inline unsigned char* GetData() { return m_Data; }
     
-    void Cleanup();
+    ~Image();
 };

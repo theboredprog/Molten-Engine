@@ -20,28 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "../utils/image.hpp"
+#include "texture-2D.hpp"
 
-namespace MTL
-{
-    class Device;
-    class Texture;
-}
+#include <simd/simd.h>
 
-class Texture2D
+struct VertexData2D;
+
+class Sprite2D
 {
 private:
-    Image* m_Image;
     
-    MTL::Texture* m_MetalTexture;
+    unsigned int m_Id;
     
+    simd::float2 m_Position;
+    simd::float4 m_Color;          // store color (RGBA)
+    
+    Texture2D* m_Texture;
+    VertexData2D* m_Data;
+
+    void UpdateVertexData();       // call after position or color change
+
 public:
-    Texture2D(const char* filepath);
     
-    void SetMetalDevice(MTL::Device* metalDevice);
+    Sprite2D(simd::float2 position, const char* filepath = nullptr);  // allow nullptr texture
+    Sprite2D(simd::float2 position,simd::float4 color, const char* filepath = nullptr);
+
+    void SetId(unsigned int id) { m_Id = id; }
+    unsigned int GetId() const { return m_Id; }
+
+    simd::float2 GetPosition() const { return m_Position; }
+    void SetPosition(const simd::float2& pos) { m_Position = pos; UpdateVertexData(); }
+
+    simd::float4 GetColor() const { return m_Color; }
+    void SetColor(const simd::float4& color) { m_Color = color; UpdateVertexData(); }
+
+    Texture2D* GetTexture() const { return m_Texture; }
+    VertexData2D* GetData() const { return m_Data; }
     
-    inline Image* GetImage() { return m_Image; }
-    inline MTL::Texture* GetMetalTexture() { return m_MetalTexture; }
-    
-    ~Texture2D();
+    ~Sprite2D();
 };

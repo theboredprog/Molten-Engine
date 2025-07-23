@@ -20,6 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include <vector>
+#include <unordered_set>
+#include <random>
+
+#include "sprite-2D.hpp"
+
 namespace MTL
 {
     class Buffer;
@@ -28,6 +34,7 @@ namespace MTL
     class RenderPipelineState;
     class CommandBuffer;
     class Device;
+    class SamplerState;
 }
 
 namespace CA
@@ -41,24 +48,33 @@ class Renderer2D
 {
 private:
     
-    MTL::Buffer* m_TriangleVertexBuffer;
     MTL::Library* m_MetalDefaultLibrary;
     MTL::CommandQueue* m_MetalCommandQueue;
     MTL::RenderPipelineState* m_MetalRenderPSO;
+    
     CA::MetalDrawable* m_MetalDrawable;
     MTL::CommandBuffer* m_MetalCommandBuffer;
+    MTL::SamplerState* m_MetalSamplerState = nullptr;
     
     Window* m_Window;
     
+    std::vector<MTL::Buffer*> m_VertexBuffers;
+    
+    std::vector<Sprite2D*> m_Queue;
+    std::unordered_set<unsigned int> s_UsedIds;
+    std::mt19937 s_Rng;
+    
 public:
     
-    Renderer2D();
+    Renderer2D(Window* window);
     
-    void Init(Window* window);
+    void AddSprite(Sprite2D* sprite);
     
-    void PrepareRenderingData();
+    void RemoveSprite(Sprite2D* sprite);
     
-    void Render();
+    void ProcessRenderingData();
     
-    void Cleanup();
+    void IssueRenderCall();
+    
+    ~Renderer2D();
 };

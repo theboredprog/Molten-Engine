@@ -22,19 +22,26 @@
 
 #include "image.hpp"
 
+#define STB_IMAGE_IMPLEMENTATION
 #include "../../third_party/stbi/stbi-image.h"
 
+#include <iostream>
 #include <cassert>
 
 Image::Image(const char* filepath)
-: m_Filepath(filepath)
+: m_Filepath(filepath), m_Data(nullptr), m_Width(0), m_Height(0), m_Channels(0)
 {
     stbi_set_flip_vertically_on_load(true);
     m_Data = stbi_load(filepath, &m_Width, &m_Height, &m_Channels, STBI_rgb_alpha);
-    assert(m_Data != NULL);
+
+    if (!m_Data)
+    {
+        std::cerr << "[ERROR] Failed to load image: " << filepath << std::endl;
+        m_Width = m_Height = m_Channels = 0;
+    }
 }
 
-void Image::Cleanup()
+Image::~Image()
 {
     stbi_image_free(m_Data);
 }

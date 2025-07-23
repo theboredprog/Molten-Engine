@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E0AE5922E31075D00137C9C /* sprite-2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E0AE5912E31075800137C9C /* sprite-2D.mm */; };
+		3E9419A52E3128ED00C260B0 /* vertex-data-2D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E9419A42E3128ED00C260B0 /* vertex-data-2D.hpp */; };
 		3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EB6742A2E2FD2C800B7049D /* window.hpp */; };
 		3EB6742F2E2FD4C800B7049D /* window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6742E2E2FD4C400B7049D /* window.mm */; };
 		3ED275E02E30D3C1008F51BA /* texture-2D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3ED275DF2E30D3BD008F51BA /* texture-2D.hpp */; };
 		3ED275E22E30D448008F51BA /* texture-2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3ED275E12E30D440008F51BA /* texture-2D.mm */; };
+		3ED275E42E30DFBE008F51BA /* sprite-2D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3ED275E32E30DFB7008F51BA /* sprite-2D.hpp */; };
 		3EDC0BB12E2F822D00A33DAE /* application.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE12E2F70EE00A33DAE /* application.mm */; };
 		3EDC0BB22E2F822D00A33DAE /* renderer-2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE62E2F70EE00A33DAE /* renderer-2D.mm */; };
 		3EDC0BB32E2F822D00A33DAE /* mtl_implementation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EDC0AE92E2F70EE00A33DAE /* mtl_implementation.mm */; };
@@ -53,10 +56,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3E0AE5912E31075800137C9C /* sprite-2D.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "sprite-2D.mm"; sourceTree = "<group>"; };
+		3E0AE5A22E311C7C00137C9C /* texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture.png; sourceTree = "<group>"; };
+		3E9419A42E3128ED00C260B0 /* vertex-data-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "vertex-data-2D.hpp"; sourceTree = "<group>"; };
 		3EB6742A2E2FD2C800B7049D /* window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = window.hpp; sourceTree = "<group>"; };
 		3EB6742E2E2FD4C400B7049D /* window.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = window.mm; sourceTree = "<group>"; };
 		3ED275DF2E30D3BD008F51BA /* texture-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "texture-2D.hpp"; sourceTree = "<group>"; };
 		3ED275E12E30D440008F51BA /* texture-2D.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "texture-2D.mm"; sourceTree = "<group>"; };
+		3ED275E32E30DFB7008F51BA /* sprite-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "sprite-2D.hpp"; sourceTree = "<group>"; };
 		3EDC0AE02E2F70EE00A33DAE /* application.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = application.hpp; sourceTree = "<group>"; };
 		3EDC0AE12E2F70EE00A33DAE /* application.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = application.mm; sourceTree = "<group>"; };
 		3EDC0AE52E2F70EE00A33DAE /* renderer-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "renderer-2D.hpp"; sourceTree = "<group>"; };
@@ -266,6 +273,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E0AE5A32E311C7C00137C9C /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				3E0AE5A22E311C7C00137C9C /* texture.png */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
 		3EDC0ACD2E2F70A500A33DAE = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +289,7 @@
 				3EDC0BC02E2F835300A33DAE /* molten.app */,
 				3EDC0B972E2F719800A33DAE /* Frameworks */,
 				3EDC0AD72E2F70A500A33DAE /* Products */,
+				3E0AE5A32E311C7C00137C9C /* assets */,
 			);
 			sourceTree = "<group>";
 		};
@@ -300,10 +316,13 @@
 		3EDC0AE82E2F70EE00A33DAE /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				3E0AE5912E31075800137C9C /* sprite-2D.mm */,
+				3ED275E32E30DFB7008F51BA /* sprite-2D.hpp */,
 				3ED275E12E30D440008F51BA /* texture-2D.mm */,
 				3ED275DF2E30D3BD008F51BA /* texture-2D.hpp */,
 				3EDC0AE52E2F70EE00A33DAE /* renderer-2D.hpp */,
 				3EDC0AE62E2F70EE00A33DAE /* renderer-2D.mm */,
+				3E9419A42E3128ED00C260B0 /* vertex-data-2D.hpp */,
 			);
 			path = renderer;
 			sourceTree = "<group>";
@@ -581,6 +600,8 @@
 			files = (
 				3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */,
 				3ED275E02E30D3C1008F51BA /* texture-2D.hpp in Headers */,
+				3E9419A52E3128ED00C260B0 /* vertex-data-2D.hpp in Headers */,
+				3ED275E42E30DFBE008F51BA /* sprite-2D.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,6 +701,7 @@
 				3EDC0BB22E2F822D00A33DAE /* renderer-2D.mm in Sources */,
 				3EDC0BB32E2F822D00A33DAE /* mtl_implementation.mm in Sources */,
 				3ED275E22E30D448008F51BA /* texture-2D.mm in Sources */,
+				3E0AE5922E31075D00137C9C /* sprite-2D.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

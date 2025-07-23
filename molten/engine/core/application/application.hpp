@@ -37,7 +37,7 @@ private:
     
     Window* m_Window;
     
-    Renderer2D* m_Renderer;
+    Renderer2D* m_Renderer2D;
     
 public:
     
@@ -47,5 +47,7 @@ public:
     
     void Run();
     
-    void Cleanup();
+    inline Renderer2D* GetRenderer2D() { return m_Renderer2D; }
+    
+    ~Application();
 };

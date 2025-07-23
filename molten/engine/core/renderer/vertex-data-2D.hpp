@@ -19,34 +19,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//
-//  triangle-shader.metal
-//  Molten App
-//
-//  Created by Gabriele Vierti on 21/07/25.
-//
 
-#include <metal_stdlib>
-using namespace metal;
+#pragma once
 
-struct VertexOut
+#include <simd/simd.h>
+
+struct VertexData2D
 {
-    float4 position [[position]];
+    simd::float3 position;
+    simd::float2 texCoord;
+    simd::float4 color;
 };
-
-vertex VertexOut vertexShader(uint vertexID [[vertex_id]], constant float3* vertexPositions)
-{
-    VertexOut out;
-    
-    out.position = float4(vertexPositions[vertexID], 1.0);
-    
-    return out;
-}
-
-fragment float4 fragmentShader(VertexOut in [[stage_in]])
-{
-    float4 mintColor = float4(1.0, 0.5, 0.2, 1.0);
-
-    return mintColor;
-}
-
