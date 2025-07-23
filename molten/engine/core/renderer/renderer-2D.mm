@@ -77,6 +77,30 @@ void Renderer2D::RemoveSprite(Sprite2D* sprite)
     }
 }
 
+void Renderer2D::UpdateProjectionMatrix(unsigned int width, unsigned int height)
+{
+    if (!m_Window) return;
+    
+    auto device = m_Window->GetMetalDevice();
+    if (!device) return;
+
+    // Release old buffer if exists
+    if (m_OrthoProjBuffer)
+    {
+        m_OrthoProjBuffer->release();
+        m_OrthoProjBuffer = nullptr;
+    }
+
+    // Create new orthographic matrix for current window size
+    m_OrthoProjMatrix = Ortho(0.0f, width, 0.0f, height);
+
+    // Create new Metal buffer with the updated matrix
+    m_OrthoProjBuffer = device->newBuffer(&m_OrthoProjMatrix, sizeof(simd::float4x4), MTL::ResourceStorageModeShared);
+    
+    LOG_CORE_INFO("Updating ortho matrix, new width: {} new height: {}", width, height);
+}
+
+
 void Renderer2D::PrepareRenderingData()
 {
     if (!m_Window) { CORE_ASSERT(false, "Window pointer is null."); return; }
@@ -109,14 +133,7 @@ void Renderer2D::PrepareRenderingData()
         if (!m_VertexBuffers[i]) { LOG_CORE_ERROR("Failed to create Metal buffer for sprite index {}", i); return; }
     }
     
-    if (m_OrthoProjBuffer)
-        m_OrthoProjBuffer->release();
-
-    // Create your ortho matrix (use full window size, no /2 unless intentional)
-    m_OrthoProjMatrix = Ortho(0.0f, m_Window->GetWidth(), 0.0f, m_Window->GetHeight());
-
-    // Create Metal buffer with the matrix's raw data address, NOT the matrix itself
-    m_OrthoProjBuffer = device->newBuffer(&m_OrthoProjMatrix, sizeof(simd::float4x4), MTL::ResourceStorageModeShared);
+    UpdateProjectionMatrix(m_Window->GetWidth(), m_Window->GetHeight());
 
     if (m_MetalDefaultLibrary) { m_MetalDefaultLibrary->release(); m_MetalDefaultLibrary = nullptr; }
 

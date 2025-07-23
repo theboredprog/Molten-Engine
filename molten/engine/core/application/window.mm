@@ -45,6 +45,7 @@ void glfwErrorCallback(int error, const char* description)
 void Window::frameBufferSizeCallback(GLFWwindow *window, int width, int height)
 {
     auto win = static_cast<Window*>(glfwGetWindowUserPointer(window));
+    
     if (win && win->m_MetalLayer)
     {
         win->m_MetalLayer->setDrawableSize(CGSizeMake(width, height));

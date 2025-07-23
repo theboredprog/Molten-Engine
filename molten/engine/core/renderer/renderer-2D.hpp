@@ -77,6 +77,8 @@ public:
     
     void RemoveSprite(Sprite2D* sprite);
     
+    void UpdateProjectionMatrix(unsigned int width, unsigned int height);
+    
     void PrepareRenderingData();
     
     void IssueRenderCall();

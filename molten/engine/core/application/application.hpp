@@ -39,6 +39,8 @@ private:
     
     Renderer2D* m_Renderer2D;
     
+    unsigned int m_LastWidth, m_LastHeight;
+    
 public:
     
     Application(unsigned int width, unsigned int height, const char* title);

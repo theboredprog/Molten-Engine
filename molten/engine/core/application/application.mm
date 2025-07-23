@@ -22,6 +22,8 @@
 
 #include <simd/simd.h>
 
+#include <GLFW/glfw3.h>
+
 #include "application.hpp"
 #include "../renderer/renderer-2D.hpp"
 #include "window.hpp"
@@ -29,7 +31,7 @@
 #include "../utils/log-macros.hpp"
 
 Application::Application(unsigned int width, unsigned int height, const char* title)
-: m_Window(new Window(width, height, title))
+: m_Window(new Window(width, height, title)), m_LastWidth(width), m_LastHeight(height)
 {
     Logger::Init();
     
@@ -44,16 +46,26 @@ bool Application::Init()
 void Application::Run()
 {
     m_Renderer2D->PrepareRenderingData();
-    
-    while (m_Window->isOpen())
-    {
-        @autoreleasepool
+
+        while (m_Window->isOpen())
         {
-            m_Renderer2D->IssueRenderCall();
+            @autoreleasepool
+            {
+                int width, height;
+                glfwGetWindowSize(m_Window->GetInternalWindow(), &width, &height);
+
+                if (width != m_LastWidth || height != m_LastHeight)
+                {
+                    m_LastWidth = width;
+                    m_LastHeight = height;
+                    m_Renderer2D->UpdateProjectionMatrix(width,height);
+                }
+
+                m_Renderer2D->IssueRenderCall();
+            }
+
+            m_Window->HandleInputEvents();
         }
-        
-        m_Window->HandleInputEvents();
-    }
 }
 
 Application::~Application()
