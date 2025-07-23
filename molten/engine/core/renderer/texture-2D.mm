@@ -15,11 +15,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <iostream>
-
 #include <Metal/Metal.hpp>
 
 #include "texture-2D.hpp"
+#include "../utils/log-macros.hpp"
 
 Texture2D::Texture2D(const char* filepath)
     : m_Image(new Image(filepath))
@@ -28,10 +27,12 @@ Texture2D::Texture2D(const char* filepath)
 
     if (!m_Image->IsValid())
     {
-        delete m_Image;
         m_Image = nullptr;
         m_MetalTexture = nullptr;
-        std::cerr << "[WARN] Texture2D: Image loading failed, texture not created\n";
+        
+        delete m_Image;
+        
+        LOG_CORE_ERROR("Image loading failed, Texture2D not created.");
     }
 }
 

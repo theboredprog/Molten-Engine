@@ -20,16 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <iostream>
 #include <simd/simd.h>
 
 #include "application.hpp"
 #include "../renderer/renderer-2D.hpp"
 #include "window.hpp"
+#include "../utils/logger.hpp"
+#include "../utils/log-macros.hpp"
 
 Application::Application(unsigned int width, unsigned int height, const char* title)
 : m_Window(new Window(width, height, title))
 {
+    Logger::Init();
+    
     m_Renderer2D = new Renderer2D(m_Window);
     
     m_Renderer2D->AddSprite(new Sprite2D(simd::float2{0.0f,0.0f}, simd::float4{1.0f,0.0f,0.0f,1.0f}, "/Users/kriot/Documents/GitHub/Molten-Engine/molten/assets/texture.png"));

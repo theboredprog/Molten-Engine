@@ -25,8 +25,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../third_party/stbi/stbi-image.h"
 
-#include <iostream>
-#include <cassert>
+#include "log-macros.hpp"
 
 Image::Image(const char* filepath)
 : m_Filepath(filepath), m_Data(nullptr), m_Width(0), m_Height(0), m_Channels(0)
@@ -36,7 +35,7 @@ Image::Image(const char* filepath)
 
     if (!m_Data)
     {
-        std::cerr << "[ERROR] Failed to load image: " << filepath << std::endl;
+        LOG_CORE_ERROR("Failed to load image: {}", filepath);
         m_Width = m_Height = m_Channels = 0;
     }
 }

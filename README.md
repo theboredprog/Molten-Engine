@@ -8,20 +8,27 @@ Expect frequent updates, improvements, and breaking changes as the engine mature
 
 It is very much a work in progress — contributions, feedback, and suggestions are highly welcome!
 
-### Features
+## Features
 
 - Native Metal integration for maximum GPU performance  
 - Simple, extensible architecture  
 - Cross-language support: C++ core with Objective-C++ Metal integration  
 - Example triangle rendering included as a starting point
 
-### Requirements
+## Third-party libraries used:
+
+- GLFW: [https://www.glfw.org](https://www.glfw.org)
+- stbi_image: [https://github.com/nothings/stb](https://github.com/nothings/stb)
+- spdlog: [https://github.com/gabime/spdlog](https://github.com/gabime/spdlog)
+- metal-cpp: [https://developer.apple.com/metal/cpp/](https://developer.apple.com/metal/cpp/)
+
+## Requirements
 
 - macOS 10.15+  
 - Xcode 12+  
 - C++17 compatible compiler  
 
-### Building
+## Building
 
 1. Clone the repository: 
 

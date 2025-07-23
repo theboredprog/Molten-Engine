@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <iostream>
 #include <random>
 #include <algorithm>
 #include <unordered_set>
@@ -31,6 +30,7 @@
 #include "renderer-2D.hpp"
 #include "../application/window.hpp"
 #include "vertex-data-2D.hpp"
+#include "../utils/log-macros.hpp"
 
 Renderer2D::Renderer2D(Window* window)
 : m_Window(window), m_MetalDefaultLibrary(nullptr), m_MetalCommandQueue(nullptr), m_MetalRenderPSO(nullptr), m_MetalDrawable(nullptr), m_MetalCommandBuffer(nullptr) { s_Rng.seed(std::random_device{}()); }
@@ -78,24 +78,24 @@ void Renderer2D::RemoveSprite(Sprite2D* sprite)
 
 void Renderer2D::PrepareRenderingData()
 {
-    if (!m_Window) { std::cerr << "[ERROR] Window pointer is null." << std::endl; return; }
+    if (!m_Window) { CORE_ASSERT(false, "Window pointer is null."); return; }
 
     auto device = m_Window->GetMetalDevice();
-    if (!device) { std::cerr << "[ERROR] Metal device is null." << std::endl; return; }
+    if (!device) { CORE_ASSERT(false, "Metal device is null."); return; }
 
     for (size_t i = 0; i < m_Queue.size(); i++)
     {
         Sprite2D* sprite = m_Queue[i];
-        if (!sprite) { std::cerr << "[WARNING] Null sprite at index " << i << std::endl; continue; }
+        if (!sprite) { LOG_CORE_ERROR("Null sprite at index "); continue; }
         
         auto texture = m_Queue[i]->GetTexture();
         
         if (texture) texture->SetMetalDevice(device);
         
-        else std::cerr << "[WARNING] Sprite texture null at index " << i << std::endl;
+        else LOG_CORE_WARN("Sprite texture null at index {}", i);
 
         auto vertexData = sprite->GetData();
-        if (!vertexData) { std::cerr << "[WARNING] Null vertex data for sprite at index " << i << std::endl; continue; }
+        if (!vertexData) { LOG_CORE_WARN("Null vertex data for sprite at index {}", i); continue; }
 
         if (m_VertexBuffers[i])
         {
@@ -105,23 +105,23 @@ void Renderer2D::PrepareRenderingData()
 
         m_VertexBuffers[i] = device->newBuffer(vertexData, sizeof(VertexData2D) * 6, MTL::ResourceStorageModeShared);
 
-        if (!m_VertexBuffers[i]) { std::cerr << "[ERROR] Failed to create Metal buffer for sprite index " << i << std::endl; return; }
+        if (!m_VertexBuffers[i]) { LOG_CORE_ERROR("Failed to create Metal buffer for sprite index {}", i); return; }
     }
 
     if (m_MetalDefaultLibrary) { m_MetalDefaultLibrary->release(); m_MetalDefaultLibrary = nullptr; }
 
     m_MetalDefaultLibrary = device->newDefaultLibrary();
-    if (!m_MetalDefaultLibrary) { std::cerr << "[ERROR] Failed to load Metal default library." << std::endl; return; }
+    if (!m_MetalDefaultLibrary) { LOG_CORE_ERROR("Failed to load Metal default library."); return; }
 
     if (m_MetalCommandQueue) { m_MetalCommandQueue->release(); m_MetalCommandQueue = nullptr; }
 
     m_MetalCommandQueue = device->newCommandQueue();
-    if (!m_MetalCommandQueue) { std::cerr << "[ERROR] Failed to create Metal command queue." << std::endl; return; }
+    if (!m_MetalCommandQueue) { LOG_CORE_ERROR("Failed to create Metal command queue."); return; }
 
     auto vertexShader = m_MetalDefaultLibrary->newFunction(NS::String::string("vertexShader", NS::UTF8StringEncoding));
     auto fragmentShader = m_MetalDefaultLibrary->newFunction(NS::String::string("fragmentShader", NS::UTF8StringEncoding));
 
-    if (!vertexShader || !fragmentShader) { std::cerr << "[ERROR] Shader function not found in Metal library." << std::endl; return; }
+    if (!vertexShader || !fragmentShader) { LOG_CORE_ERROR("Shader function not found in Metal library."); return; }
 
     if (m_MetalRenderPSO) { m_MetalRenderPSO->release(); m_MetalRenderPSO = nullptr; }
 
@@ -155,7 +155,6 @@ void Renderer2D::PrepareRenderingData()
 
     vertexDescriptor->release();
 
-
     NS::Error* error = nullptr;
     m_MetalRenderPSO = device->newRenderPipelineState(pipelineDescriptor, &error);
 
@@ -167,7 +166,7 @@ void Renderer2D::PrepareRenderingData()
 
     if (!m_MetalRenderPSO)
     {
-        std::cerr << "[ERROR] Failed to create Render Pipeline State: " << (error ? error->localizedDescription()->utf8String() : "unknown error") << std::endl;
+        LOG_CORE_ERROR("Failed to create Render Pipeline State: {}", error->localizedDescription()->utf8String());
         return;
     }
     
@@ -189,7 +188,7 @@ void Renderer2D::PrepareRenderingData()
     
     samplerDesc->release();
 
-    if (!m_MetalSamplerState) { std::cerr << "[ERROR] Failed to create Metal sampler state." << std::endl; return; }
+    if (!m_MetalSamplerState) { LOG_CORE_ERROR("Failed to create Metal sampler state."); return; }
 }
 
 void Renderer2D::IssueRenderCall()
@@ -198,14 +197,14 @@ void Renderer2D::IssueRenderCall()
     {
         if (!m_MetalCommandQueue || !m_MetalRenderPSO)
         {
-            std::cerr << "[ERROR] Cannot issue render call: CommandQueue or PipelineState not ready." << std::endl;
+            LOG_CORE_ERROR("Cannot issue render call: CommandQueue or PipelineState not ready.");
             return;
         }
 
         m_MetalDrawable = m_Window->GetMetalLayer()->nextDrawable();
         if (!m_MetalDrawable)
         {
-            std::cerr << "[WARNING] Metal drawable is null. Possibly invalid layer size or window not ready." << std::endl;
+            LOG_CORE_WARN("Metal drawable is null. Possibly invalid layer size or window not ready.");
             return;
         }
 
@@ -249,9 +248,9 @@ void Renderer2D::IssueRenderCall()
         m_MetalCommandBuffer->presentDrawable(m_MetalDrawable);
         m_MetalCommandBuffer->commit();
 
-        // Remove or conditionally compile this for debugging only - it stalls the cpu to wait for the gpu
-        // = very bad for performance.
-        // m_MetalCommandBuffer->waitUntilCompleted();
+        // TODO: stalls the cpu to wait for the gpu = very bad for performance.
+        // good for debugging tho, so keep this for now, remove for optimization stage.
+        m_MetalCommandBuffer->waitUntilCompleted();
 
         renderPassDescriptor->release();
     }
@@ -273,6 +272,6 @@ Renderer2D::~Renderer2D()
     if (m_MetalCommandQueue) { m_MetalCommandQueue->release(); m_MetalCommandQueue = nullptr; }
     if (m_MetalDefaultLibrary) { m_MetalDefaultLibrary->release(); m_MetalDefaultLibrary = nullptr; }
     if (m_MetalSamplerState) { m_MetalSamplerState->release(); m_MetalSamplerState = nullptr; }
-
+    
     if (m_Window && m_Window->GetMetalDevice()) { m_Window->GetMetalDevice()->release(); m_Window->SetMetalDevice(nullptr); }
 }

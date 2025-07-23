@@ -24,6 +24,7 @@
 
 #include "vertex-data-2D.hpp"
 #include "sprite-2D.hpp"
+#include "../utils/log-macros.hpp"
 
 Sprite2D::Sprite2D(simd::float2 position, const char* filepath)
     : m_Position(position), m_Color{1.0f, 1.0f, 1.0f, 1.0f}, m_Texture(nullptr), m_VertexData(new VertexData2D[6])

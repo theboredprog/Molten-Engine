@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <iostream>
-
 #define GLFW_INCLUDE_NONE
 #import <GLFW/glfw3.h>
 
@@ -36,9 +34,11 @@
 
 #include "window.hpp"
 
+#include "../utils/log-macros.hpp"
+
 void glfwErrorCallback(int error, const char* description)
 {
-    std::cerr << "[GLFW ERROR] (" << error << "): " << description << std::endl;
+    LOG_CORE_ERROR("({}): {}", error, description);
 }
 
 void Window::frameBufferSizeCallback(GLFWwindow *window, int width, int height)
@@ -54,7 +54,7 @@ bool Window::InitGlfw()
 {
     if(!glfwInit())
     {
-        std::cerr << "[ERROR] Failed to initialize GLFW." << std::endl;
+        CORE_ASSERT(false, "Failed to initialize GLFW.");
         glfwTerminate();
         return false;
     }
@@ -67,7 +67,7 @@ bool Window::InitGlfw()
     
     if (!m_InternalWindow)
     {
-        std::cerr << "[ERROR] Failed to create GLFW window." << std::endl;
+        CORE_ASSERT(false, "Failed to create GLFW window.");
         glfwTerminate();
         return false;
     }
@@ -83,21 +83,21 @@ bool Window::InitGlfw()
     m_MetalWindow = glfwGetCocoaWindow(m_InternalWindow);
     if (!m_MetalWindow)
     {
-        std::cerr << "[ERROR] Failed to get native NSWindow from GLFW." << std::endl;
+        CORE_ASSERT(false, "Failed to get native NSWindow from GLFW.");
         return false;
     }
     
     m_MetalDevice = MTL::CreateSystemDefaultDevice();
     if (!m_MetalDevice)
     {
-        std::cerr << "[ERROR] Failed to create Metal device." << std::endl;
+        CORE_ASSERT(false, "Failed to create Metal device.");
         return false;
     }
     
     m_MetalLayer = CA::MetalLayer::layer();
     if (!m_MetalLayer)
     {
-        std::cerr << "[ERROR] Failed to create CAMetalLayer." << std::endl;
+        CORE_ASSERT(false, "Failed to create CAMetalLayer.");
         return false;
     }
     

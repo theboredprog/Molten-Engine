@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E0AE5922E31075D00137C9C /* sprite-2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E0AE5912E31075800137C9C /* sprite-2D.mm */; };
+		3E2D1DAC2E314E51002F6589 /* molten.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E2D1DAB2E314E4C002F6589 /* molten.hpp */; };
 		3E9419A52E3128ED00C260B0 /* vertex-data-2D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E9419A42E3128ED00C260B0 /* vertex-data-2D.hpp */; };
 		3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EB6742A2E2FD2C800B7049D /* window.hpp */; };
 		3EB6742F2E2FD4C800B7049D /* window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6742E2E2FD4C400B7049D /* window.mm */; };
@@ -58,6 +59,7 @@
 /* Begin PBXFileReference section */
 		3E0AE5912E31075800137C9C /* sprite-2D.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "sprite-2D.mm"; sourceTree = "<group>"; };
 		3E0AE5A22E311C7C00137C9C /* texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture.png; sourceTree = "<group>"; };
+		3E2D1DAB2E314E4C002F6589 /* molten.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = molten.hpp; sourceTree = "<group>"; };
 		3E9419A42E3128ED00C260B0 /* vertex-data-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "vertex-data-2D.hpp"; sourceTree = "<group>"; };
 		3EB6742A2E2FD2C800B7049D /* window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = window.hpp; sourceTree = "<group>"; };
 		3EB6742E2E2FD4C400B7049D /* window.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = window.mm; sourceTree = "<group>"; };
@@ -224,6 +226,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		3E2D1D392E31457C002F6589 /* spdlog */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = spdlog;
+			sourceTree = "<group>";
+		};
 		3ED275D42E30D1B3008F51BA /* utils */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = utils;
@@ -330,6 +337,7 @@
 		3EDC0AEA2E2F70EE00A33DAE /* core */ = {
 			isa = PBXGroup;
 			children = (
+				3E2D1DAB2E314E4C002F6589 /* molten.hpp */,
 				3ED275D42E30D1B3008F51BA /* utils */,
 				3EDC0AE22E2F70EE00A33DAE /* application */,
 				3EDC0AE82E2F70EE00A33DAE /* renderer */,
@@ -574,6 +582,7 @@
 				3ED275DB2E30D261008F51BA /* stbi */,
 				3EDC0AFD2E2F70EE00A33DAE /* glfw */,
 				3EDC0B8E2E2F70EE00A33DAE /* metal-cpp */,
+				3E2D1D392E31457C002F6589 /* spdlog */,
 			);
 			path = third_party;
 			sourceTree = "<group>";
@@ -600,6 +609,7 @@
 			files = (
 				3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */,
 				3ED275E02E30D3C1008F51BA /* texture-2D.hpp in Headers */,
+				3E2D1DAC2E314E51002F6589 /* molten.hpp in Headers */,
 				3E9419A52E3128ED00C260B0 /* vertex-data-2D.hpp in Headers */,
 				3ED275E42E30DFBE008F51BA /* sprite-2D.hpp in Headers */,
 			);
@@ -621,6 +631,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				3E2D1D392E31457C002F6589 /* spdlog */,
 				3ED275D42E30D1B3008F51BA /* utils */,
 				3ED275DB2E30D261008F51BA /* stbi */,
 			);
@@ -846,6 +857,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/third_party/glfw/include",
 					"$(PROJECT_DIR)/third_party/metal-cpp",
+					"$(PROJECT_DIR)/third_party/spdlog/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -864,6 +876,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/third_party/glfw/include",
 					"$(PROJECT_DIR)/third_party/metal-cpp",
+					"$(PROJECT_DIR)/third_party/spdlog/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -878,7 +891,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/engine/core/**";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/engine/core/**",
+					"$(PROJECT_DIR)/third_party/spdlog/include",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -887,7 +903,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/engine/core/**";
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/engine/core/**",
+					"$(PROJECT_DIR)/third_party/spdlog/include",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
