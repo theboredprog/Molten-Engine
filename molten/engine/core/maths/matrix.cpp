@@ -20,13 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "game.hpp"
+#include "matrix.h"
 
-#include "../utils/log-macros.hpp"
-#include "application.hpp"
-
-Renderer2D* Game::GetRenderer() const
+simd::float4x4 Ortho(float left, float right, float bottom, float top)
 {
-    CORE_ASSERT(m_Application, "Game has no Application instance");
-    return m_Application ? m_Application->GetRenderer2D() : nullptr;
+    float rl = right - left;
+    float tb = top - bottom;
+    float tx = -(right + left) / rl;
+    float ty = -(top + bottom) / tb;
+
+    return simd::float4x4(
+      simd::float4{2.0f / rl, 0.0f,       0.0f, 0.0f}, // Column 0
+      simd::float4{0.0f,       2.0f / tb, 0.0f, 0.0f}, // Column 1
+      simd::float4{0.0f,       0.0f,       1.0f, 0.0f}, // Column 2
+      simd::float4{tx,         ty,         0.0f, 1.0f}  // Column 3
+    );
 }

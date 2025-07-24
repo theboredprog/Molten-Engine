@@ -20,11 +20,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "input.hpp"
+#include "input.h"
 
 #include <GLFW/glfw3.h>
 
-#include "../utils/log-macros.hpp"
+#include "../utils/log-macros.h"
 
 int Input::MapKeycodeToGLFW(Keycode key)
 {

@@ -20,35 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#pragma once
+#include "image.h"
 
-#include "keycode.hpp"
+#define STB_IMAGE_IMPLEMENTATION
+#include "../../third_party/stbi/stbi-image.h"
 
-#include <unordered_map>
+#include "log-macros.h"
 
-class GLFWwindow;
-
-class Input
+Image::Image(const char* filepath)
+: m_Filepath(filepath), m_Data(nullptr), m_Width(0), m_Height(0), m_Channels(0)
 {
-public:
-    static void Initialize(GLFWwindow* window);
+    stbi_set_flip_vertically_on_load(true);
+    m_Data = stbi_load(filepath, &m_Width, &m_Height, &m_Channels, STBI_rgb_alpha);
 
-    static void Update(); // To be called every frame
+    if (!m_Data)
+    {
+        LOG_CORE_ERROR("Failed to load image: {}", filepath);
+        m_Width = m_Height = m_Channels = 0;
+    }
+}
 
-    static bool GetKeyDown(Keycode key);
-    static bool GetKeyUp(Keycode key);
-    static bool GetKeyHeld(Keycode key);
-
-private:
-    static GLFWwindow* s_Window;
-
-    // Key states tracked per frame
-    static std::unordered_map<int, bool> s_KeysDown;
-    static std::unordered_map<int, bool> s_KeysUp;
-    static std::unordered_map<int, bool> s_KeysHeld;
-    
-    static int MapKeycodeToGLFW(Keycode key);
-
-    // Internal callback from GLFW
-    static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-};
+Image::~Image()
+{
+    stbi_image_free(m_Data);
+}

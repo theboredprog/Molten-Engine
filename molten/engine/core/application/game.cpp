@@ -20,38 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "sprite-2D.hpp"
+#include "game.h"
 
-#include <Metal/Metal.hpp>
+#include "../utils/log-macros.h"
+#include "application.h"
 
-#include "../utils/log-macros.hpp"
-#include "texture-2D.hpp"
-
-Sprite2D::Sprite2D(simd::float2 position,
-                   simd::float2 size,
-                   float rotation,
-                   const char* filepath)
-    : m_Position(position), m_Color{1.0f, 1.0f, 1.0f, 1.0f},
-      m_Size(size), m_Rotation(rotation), m_Texture(nullptr)
+Renderer2D* Game::GetRenderer() const
 {
-    if (filepath && *filepath != '\0')
-        m_Texture = new Texture2D(filepath);
-}
-
-Sprite2D::Sprite2D(simd::float2 position,
-                   simd::float4 color,
-                   simd::float2 size,
-                   float rotation,
-                   const char* filepath)
-    : m_Position(position), m_Color(color),
-      m_Size(size), m_Rotation(rotation), m_Texture(nullptr)
-{
-    if (filepath && *filepath != '\0')
-        m_Texture = new Texture2D(filepath);
-
-}
-
-Sprite2D::~Sprite2D()
-{
-    if (m_Texture) delete m_Texture;
+    CORE_ASSERT(m_Application, "Game has no Application instance");
+    return m_Application ? m_Application->GetRenderer2D() : nullptr;
 }

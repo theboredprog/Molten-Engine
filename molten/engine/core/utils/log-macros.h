@@ -20,23 +20,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "logger.hpp"
-#include <spdlog/sinks/stdout_color_sinks.h>
+#pragma once
 
-std::shared_ptr<spdlog::logger> Logger::s_CoreLogger;
-std::shared_ptr<spdlog::logger> Logger::s_ClientLogger;
+#include <cassert>
+#include "logger.h"
 
-void Logger::Init()
-{
-    spdlog::set_pattern("[MOLTEN-ENGINE] %^[%T] %n: %v%$"); // Color, timestamp, logger name, message
+#ifndef LOG_CLIENT
 
-    s_CoreLogger = spdlog::stdout_color_mt("CORE");
-    s_CoreLogger->set_level(spdlog::level::trace);
+#define LOG_CORE_TRACE(...)    Logger::Core()->trace(__VA_ARGS__)
+#define LOG_CORE_INFO(...)     Logger::Core()->info(__VA_ARGS__)
+#define LOG_CORE_WARN(...)     Logger::Core()->warn(__VA_ARGS__)
+#define LOG_CORE_ERROR(...)    Logger::Core()->error(__VA_ARGS__)
+#define LOG_CORE_CRITICAL(...) Logger::Core()->critical(__VA_ARGS__)
 
-    s_ClientLogger = spdlog::stdout_color_mt("CLIENT");
-    s_ClientLogger->set_level(spdlog::level::trace);
-}
+#else
 
-std::shared_ptr<spdlog::logger>& Logger::Core() { return s_CoreLogger; }
+#define LOG_TRACE(...)         Logger::Client()->trace(__VA_ARGS__)
+#define LOG_INFO(...)          Logger::Client()->info(__VA_ARGS__)
+#define LOG_WARN(...)          Logger::Client()->warn(__VA_ARGS__)
+#define LOG_ERROR(...)         Logger::Client()->error(__VA_ARGS__)
+#define LOG_CRITICAL(...)      Logger::Client()->critical(__VA_ARGS__)
 
-std::shared_ptr<spdlog::logger>& Logger::Client() { return s_ClientLogger; }
+#endif
+
+#ifdef NDEBUG
+    #define CORE_ASSERT(x, ...) (void)0
+    #define ASSERT(x, ...)      (void)0
+#else
+    #define CORE_ASSERT(x, ...) \
+        if (!(x)) { \
+            LOG_CORE_CRITICAL(__VA_ARGS__); \
+            assert(x); \
+        }
+
+    #define ASSERT(x, ...) \
+        if (!(x)) { \
+            LOG_CRITICAL(__VA_ARGS__); \
+            assert(x); \
+        }
+#endif

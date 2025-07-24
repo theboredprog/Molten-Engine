@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "window.hpp"
+#include "window.h"
 
 #define GLFW_INCLUDE_NONE
 #import <GLFW/glfw3.h>
@@ -34,9 +34,9 @@
 #include <QuartzCore/CAMetalLayer.h>
 #include <QuartzCore/CAMetalLayer.hpp>
 
-#include "../utils/log-macros.hpp"
-#include "application.hpp"
-#include "input.hpp"
+#include "../utils/log-macros.h"
+#include "application.h"
+#include "input.h"
 
 void glfwErrorCallback(int error, const char* description)
 {

@@ -22,40 +22,33 @@
 
 #pragma once
 
-#include <cassert>
-#include "logger.hpp"
+#include "keycode.h"
 
-#ifndef LOG_CLIENT
+#include <unordered_map>
 
-#define LOG_CORE_TRACE(...)    Logger::Core()->trace(__VA_ARGS__)
-#define LOG_CORE_INFO(...)     Logger::Core()->info(__VA_ARGS__)
-#define LOG_CORE_WARN(...)     Logger::Core()->warn(__VA_ARGS__)
-#define LOG_CORE_ERROR(...)    Logger::Core()->error(__VA_ARGS__)
-#define LOG_CORE_CRITICAL(...) Logger::Core()->critical(__VA_ARGS__)
+class GLFWwindow;
 
-#else
+class Input
+{
+public:
+    static void Initialize(GLFWwindow* window);
 
-#define LOG_TRACE(...)         Logger::Client()->trace(__VA_ARGS__)
-#define LOG_INFO(...)          Logger::Client()->info(__VA_ARGS__)
-#define LOG_WARN(...)          Logger::Client()->warn(__VA_ARGS__)
-#define LOG_ERROR(...)         Logger::Client()->error(__VA_ARGS__)
-#define LOG_CRITICAL(...)      Logger::Client()->critical(__VA_ARGS__)
+    static void Update(); // To be called every frame
 
-#endif
+    static bool GetKeyDown(Keycode key);
+    static bool GetKeyUp(Keycode key);
+    static bool GetKeyHeld(Keycode key);
 
-#ifdef NDEBUG
-    #define CORE_ASSERT(x, ...) (void)0
-    #define ASSERT(x, ...)      (void)0
-#else
-    #define CORE_ASSERT(x, ...) \
-        if (!(x)) { \
-            LOG_CORE_CRITICAL(__VA_ARGS__); \
-            assert(x); \
-        }
+private:
+    static GLFWwindow* s_Window;
 
-    #define ASSERT(x, ...) \
-        if (!(x)) { \
-            LOG_CRITICAL(__VA_ARGS__); \
-            assert(x); \
-        }
-#endif
+    // Key states tracked per frame
+    static std::unordered_map<int, bool> s_KeysDown;
+    static std::unordered_map<int, bool> s_KeysUp;
+    static std::unordered_map<int, bool> s_KeysHeld;
+    
+    static int MapKeycodeToGLFW(Keycode key);
+
+    // Internal callback from GLFW
+    static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+};

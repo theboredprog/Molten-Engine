@@ -20,19 +20,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "matrix.hpp"
+#include "logger.h"
+#include <spdlog/sinks/stdout_color_sinks.h>
 
-simd::float4x4 Ortho(float left, float right, float bottom, float top)
+std::shared_ptr<spdlog::logger> Logger::s_CoreLogger;
+std::shared_ptr<spdlog::logger> Logger::s_ClientLogger;
+
+void Logger::Init()
 {
-    float rl = right - left;
-    float tb = top - bottom;
-    float tx = -(right + left) / rl;
-    float ty = -(top + bottom) / tb;
+    spdlog::set_pattern("[MOLTEN-ENGINE] %^[%T] %n: %v%$"); // Color, timestamp, logger name, message
 
-    return simd::float4x4(
-      simd::float4{2.0f / rl, 0.0f,       0.0f, 0.0f}, // Column 0
-      simd::float4{0.0f,       2.0f / tb, 0.0f, 0.0f}, // Column 1
-      simd::float4{0.0f,       0.0f,       1.0f, 0.0f}, // Column 2
-      simd::float4{tx,         ty,         0.0f, 1.0f}  // Column 3
-    );
+    s_CoreLogger = spdlog::stdout_color_mt("CORE");
+    s_CoreLogger->set_level(spdlog::level::trace);
+
+    s_ClientLogger = spdlog::stdout_color_mt("CLIENT");
+    s_ClientLogger->set_level(spdlog::level::trace);
 }
+
+std::shared_ptr<spdlog::logger>& Logger::Core() { return s_CoreLogger; }
+
+std::shared_ptr<spdlog::logger>& Logger::Client() { return s_ClientLogger; }

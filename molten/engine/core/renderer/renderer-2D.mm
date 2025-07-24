@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "renderer-2D.hpp"
+#include "renderer-2D.h"
 
 #include <random>
 #include <algorithm>
@@ -29,12 +29,12 @@
 #include <Metal/Metal.hpp>
 #include <QuartzCore/CAMetalLayer.hpp>
 
-#include "../application/window.hpp"
-#include "vertex-data-2D.hpp"
-#include "../utils/log-macros.hpp"
-#include "../application/window.hpp"
-#include "sprite-2D.hpp"
-#include "texture-2D.hpp"
+#include "../application/window.h"
+#include "vertex-data-2D.h"
+#include "../utils/log-macros.h"
+#include "../application/window.h"
+#include "sprite-2D.h"
+#include "texture-2D.h"
 
 Renderer2D::Renderer2D(Window* window)
 : m_Window(window), m_MetalDefaultLibrary(nullptr), m_MetalCommandQueue(nullptr), m_MetalRenderPSO(nullptr), m_MetalDrawable(nullptr), m_MetalCommandBuffer(nullptr) { s_Rng.seed(std::random_device{}()); }

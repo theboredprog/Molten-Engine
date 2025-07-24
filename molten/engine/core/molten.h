@@ -20,14 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "application/application.hpp"
-#include "renderer/renderer-2D.hpp"
-#include "renderer/sprite-2D.hpp"
-#include "application/game.hpp"
-#include "application/input.hpp"
+#include "application/application.h"
+#include "renderer/renderer-2D.h"
+#include "renderer/sprite-2D.h"
+#include "application/game.h"
+#include "application/input.h"
 
 #define LOG_CLIENT
-#include "utils/log-macros.hpp"
+#include "utils/log-macros.h"
 
 //TODO: batch 2d sprites - make a decent 2d renderer - right now it's the most inefficent thing ever, reconstructing vertex data every frame; Ideally it would take all sprites in at once, create a spritesheet with all the images, gather all the data, make a huge buffer, send it to the gpu for drawing and only update this buffer when we want to change the positions of the sprites in the game - this keeps everything on the screen with only a single draw call, with minimal overhead.
 

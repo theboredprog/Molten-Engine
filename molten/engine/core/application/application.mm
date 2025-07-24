@@ -20,22 +20,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "application.hpp"
+#include "application.h"
 
 #include <simd/simd.h>
 
 #include <GLFW/glfw3.h>
 
-#include "window.hpp"
-#include "../utils/logger.hpp"
+#include "window.h"
+#include "../utils/logger.h"
 
-#include "../utils/log-macros.hpp"
+#include "../utils/log-macros.h"
 
-#include "../renderer/renderer-2D.hpp"
+#include "../renderer/renderer-2D.h"
 
-#include "game.hpp"
+#include "game.h"
 
-#include "input.hpp"
+#include "input.h"
 
 Application::Application(unsigned int width, unsigned int height, const char* title, Game* game)
 : m_Window(new Window(width, height, title)), m_Game(game)

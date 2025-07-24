@@ -20,27 +20,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "image.hpp"
+#include "sprite-2D.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "../../third_party/stbi/stbi-image.h"
+#include <Metal/Metal.hpp>
 
-#include "log-macros.hpp"
+#include "../utils/log-macros.h"
+#include "texture-2D.h"
 
-Image::Image(const char* filepath)
-: m_Filepath(filepath), m_Data(nullptr), m_Width(0), m_Height(0), m_Channels(0)
+Sprite2D::Sprite2D(simd::float2 position,
+                   simd::float2 size,
+                   float rotation,
+                   const char* filepath)
+    : m_Position(position), m_Color{1.0f, 1.0f, 1.0f, 1.0f},
+      m_Size(size), m_Rotation(rotation), m_Texture(nullptr)
 {
-    stbi_set_flip_vertically_on_load(true);
-    m_Data = stbi_load(filepath, &m_Width, &m_Height, &m_Channels, STBI_rgb_alpha);
-
-    if (!m_Data)
-    {
-        LOG_CORE_ERROR("Failed to load image: {}", filepath);
-        m_Width = m_Height = m_Channels = 0;
-    }
+    if (filepath && *filepath != '\0')
+        m_Texture = new Texture2D(filepath);
 }
 
-Image::~Image()
+Sprite2D::Sprite2D(simd::float2 position,
+                   simd::float4 color,
+                   simd::float2 size,
+                   float rotation,
+                   const char* filepath)
+    : m_Position(position), m_Color(color),
+      m_Size(size), m_Rotation(rotation), m_Texture(nullptr)
 {
-    stbi_image_free(m_Data);
+    if (filepath && *filepath != '\0')
+        m_Texture = new Texture2D(filepath);
+
+}
+
+Sprite2D::~Sprite2D()
+{
+    if (m_Texture) delete m_Texture;
 }

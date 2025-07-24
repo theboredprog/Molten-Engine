@@ -24,7 +24,7 @@
 #include <unordered_set>
 #include <random>
 
-#include "../maths/matrix.hpp"
+#include "../maths/matrix.h"
 
 namespace MTL
 {
