@@ -20,11 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "texture-2D.hpp"
-
 #include <simd/simd.h>
 
-struct VertexData2D;
+class Texture2D;
 
 class Sprite2D
 {
@@ -39,9 +37,6 @@ private:
     float m_Rotation;
     
     Texture2D* m_Texture = nullptr;
-    VertexData2D* m_VertexData = nullptr;
-
-    void CreateVertexData();
 
 public:
     
@@ -57,10 +52,10 @@ public:
              const char* filepath = nullptr);
 
     void SetId(unsigned int id) { m_Id = id; }
-    void SetPosition(const simd::float2& pos) { m_Position = pos; CreateVertexData(); }
-    void SetSize(const simd::float2& size) { m_Size = size; CreateVertexData(); }
-    void SetRotation(float radians) { m_Rotation = radians; CreateVertexData(); }
-    void SetColor(const simd::float4& color) { m_Color = color; CreateVertexData(); }
+    void SetPosition(const simd::float2& pos) { m_Position = pos; }
+    void SetSize(const simd::float2& size) { m_Size = size; }
+    void SetRotation(float radians) { m_Rotation = radians; }
+    void SetColor(const simd::float4& color) { m_Color = color; }
 
     unsigned int GetId() const { return m_Id; }
     
@@ -70,7 +65,6 @@ public:
     float GetRotation() const { return m_Rotation; }
 
     Texture2D* GetTexture() const { return m_Texture; }
-    const VertexData2D* GetData() const { return m_VertexData; }
 
     ~Sprite2D();
 };

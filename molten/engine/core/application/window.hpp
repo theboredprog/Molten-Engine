@@ -62,6 +62,10 @@ public:
     
     inline unsigned int GetHeight() const { return m_Height; }
     
+    inline void SetWidth(unsigned int width) { m_Width = width; }
+    
+    inline void SetHeight(unsigned int height) { m_Height = height; }
+    
     inline GLFWwindow* GetInternalWindow() const { return m_InternalWindow; }
     
     inline NSWindow* GetMetalWindow() const { return m_MetalWindow; }

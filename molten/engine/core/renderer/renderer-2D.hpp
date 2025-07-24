@@ -24,7 +24,6 @@
 #include <unordered_set>
 #include <random>
 
-#include "sprite-2D.hpp"
 #include "../maths/matrix.hpp"
 
 namespace MTL
@@ -45,6 +44,7 @@ namespace CA
 }
 
 class Window;
+class Sprite2D;
 
 class Renderer2D
 {
@@ -83,6 +83,8 @@ public:
     void IssueRenderCall();
     
     Window* GetWindow() const { return m_Window; }
+    
+    void Cleanup();
     
     ~Renderer2D();
 };

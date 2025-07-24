@@ -25,50 +25,71 @@
 #include <GLFW/glfw3.h>
 
 #include "application.hpp"
-#include "../renderer/renderer-2D.hpp"
-#include "../renderer/batch-renderer-2D.hpp"
 #include "window.hpp"
 #include "../utils/logger.hpp"
 
 #include "../utils/log-macros.hpp"
 
-Application::Application(unsigned int width, unsigned int height, const char* title)
-: m_Window(new Window(width, height, title)), m_LastWidth(width), m_LastHeight(height)
+#include "../renderer/renderer-2D.hpp"
+
+#include "game.hpp"
+
+Application::Application(unsigned int width, unsigned int height, const char* title, Game* game)
+: m_Window(new Window(width, height, title)), m_Game(game)
 {
     Logger::Init();
     
-    m_Renderer2D = new Renderer2D(m_Window);
-    m_BatchRenderer2D = new BatchRenderer2D(m_Window);
+    m_Renderer = new Renderer2D(m_Window);
+    
+    if (m_Game) m_Game->SetApplication(this);
+    if (m_Game) m_Game->OnStart();
+    
+    m_Renderer->PrepareRenderingData();
 }
 
 void Application::Run()
 {
+    double lastTime = glfwGetTime();
+    
     while (m_Window->isOpen())
     {
+        m_Window->HandleInputEvents();
+        
+        double currentTime = glfwGetTime();
+        float deltaTime = static_cast<float>(currentTime - lastTime);
+        lastTime = currentTime;
+
+        if (m_Game)
+            m_Game->OnUpdate(deltaTime);
+        
         @autoreleasepool
         {
             int width, height;
             glfwGetWindowSize(m_Window->GetInternalWindow(), &width, &height);
-
-            if (width != m_LastWidth || height != m_LastHeight)
+            
+            if (width != m_Window->GetWidth() || height != m_Window->GetHeight())
             {
-                m_LastWidth = width;
-                m_LastHeight = height;
-                m_BatchRenderer2D->UpdateProjMatrix(width, height); // you still need this method
+                m_Window->SetWidth(width);
+                m_Window->SetHeight(height);
+                
+                //TODO: update renderer proj matrix.
+                m_Renderer->UpdateProjMatrix(width, height);
             }
-
-            // Just flush the renderer, it does the full rendering pass now
-            m_BatchRenderer2D->Flush();
+            
+            m_Renderer->IssueRenderCall();
         }
-
-        m_Window->HandleInputEvents();
     }
+    
+    if (m_Game) m_Game->OnShutdown();
 }
 
 Application::~Application()
 {
-    if (m_Renderer2D) delete m_Renderer2D;
-    if (m_BatchRenderer2D) delete m_BatchRenderer2D;
-    
     if(m_Window) delete m_Window;
+
+    if(m_Renderer)
+    {
+        m_Renderer->Cleanup();
+        delete m_Renderer;
+    }
 }

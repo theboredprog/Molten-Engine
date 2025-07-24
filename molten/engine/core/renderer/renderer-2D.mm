@@ -32,6 +32,8 @@
 #include "vertex-data-2D.hpp"
 #include "../utils/log-macros.hpp"
 #include "../application/window.hpp"
+#include "sprite-2D.hpp"
+#include "texture-2D.hpp"
 
 Renderer2D::Renderer2D(Window* window)
 : m_Window(window), m_MetalDefaultLibrary(nullptr), m_MetalCommandQueue(nullptr), m_MetalRenderPSO(nullptr), m_MetalDrawable(nullptr), m_MetalCommandBuffer(nullptr) { s_Rng.seed(std::random_device{}()); }
@@ -114,7 +116,47 @@ void Renderer2D::PrepareRenderingData()
         
         else LOG_CORE_WARN("Sprite texture null at index {}", i);
 
-        auto vertexData = sprite->GetData();
+        auto vertexData = new VertexData2D[6];
+        
+        // Quad base vertices (unit square centered at origin)
+        simd::float3 posOffsets[6] =
+        {
+            {-0.5f, -0.5f, 0.0f},
+            {-0.5f,  0.5f, 0.0f},
+            { 0.5f,  0.5f, 0.0f},
+            {-0.5f, -0.5f, 0.0f},
+            { 0.5f,  0.5f, 0.0f},
+            { 0.5f, -0.5f, 0.0f},
+        };
+
+        simd::float2 texCoords[6] =
+        {
+            {0.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f},
+            {0.0f, 0.0f}, {1.0f, 1.0f}, {1.0f, 0.0f}
+        };
+
+        // Add these members to your Sprite2D class:
+        // simd::float2 m_Scale = {100.0f, 100.0f}; // default scale in pixels
+        // float m_Rotation = 0.0f; // rotation in radians
+
+        float cosAngle = cos(sprite->GetRotation());
+        float sinAngle = sin(sprite->GetRotation());
+
+        for (int i = 0; i < 6; i++)
+        {
+            // Rotate
+            float rotatedX = posOffsets[i].x * cosAngle - posOffsets[i].y * sinAngle;
+            float rotatedY = posOffsets[i].x * sinAngle + posOffsets[i].y * cosAngle;
+
+            // Scale and translate to position
+            float finalX = sprite->GetPosition().x + rotatedX *  sprite->GetSize().x;
+            float finalY =  sprite->GetPosition().y + rotatedY * sprite->GetSize().y;
+
+            vertexData[i].position = simd::float3{finalX, finalY, 0.0f};
+            vertexData[i].texCoord = texCoords[i];
+            vertexData[i].color = sprite->GetColor();
+        }
+        
         if (!vertexData) { LOG_CORE_WARN("Null vertex data for sprite at index {}", i); continue; }
 
         if (m_VertexBuffers[i])
@@ -280,18 +322,19 @@ void Renderer2D::IssueRenderCall()
     }
 }
 
-Renderer2D::~Renderer2D()
+void Renderer2D::Cleanup()
 {
     for (auto buffer : m_VertexBuffers)
         if (buffer) buffer->release();
 
     m_VertexBuffers.clear();
 
-    for (auto sprite : m_Queue)
-        delete sprite;
 
     m_Queue.clear();
-    
+}
+
+Renderer2D::~Renderer2D()
+{
     if (m_MetalRenderPSO) { m_MetalRenderPSO->release(); m_MetalRenderPSO = nullptr; }
     if (m_MetalCommandQueue) { m_MetalCommandQueue->release(); m_MetalCommandQueue = nullptr; }
     if (m_MetalDefaultLibrary) { m_MetalDefaultLibrary->release(); m_MetalDefaultLibrary = nullptr; }

@@ -20,13 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "../utils/image.hpp"
-
 namespace MTL
 {
     class Device;
     class Texture;
 }
+
+class Image;
 
 class Texture2D
 {

@@ -17,6 +17,7 @@
 
 #include <Metal/Metal.hpp>
 
+#include "../utils/image.hpp"
 #include "texture-2D.hpp"
 #include "../utils/log-macros.hpp"
 

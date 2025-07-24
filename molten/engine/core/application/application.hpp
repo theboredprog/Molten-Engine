@@ -28,29 +28,25 @@
 
 #pragma once
 
-class BatchRenderer2D;
-class Renderer2D;
 class Window;
+class Renderer2D;
+class Game;
 
 class Application
 {
 private:
     
     Window* m_Window;
-    
-    Renderer2D* m_Renderer2D;
-    BatchRenderer2D* m_BatchRenderer2D;
-    
-    unsigned int m_LastWidth, m_LastHeight;
+    Game* m_Game;
+    Renderer2D* m_Renderer;
     
 public:
     
-    explicit Application(unsigned int width, unsigned int height, const char* title);
+    explicit Application(unsigned int width, unsigned int height, const char* title, Game* game);
+    
+    inline Renderer2D* GetRenderer2D() const { return m_Renderer; }
     
     void Run();
-    
-    inline Renderer2D* GetRenderer2D() const { return m_Renderer2D; }
-    inline BatchRenderer2D* GetBatchRenderer2D() const { return m_BatchRenderer2D; }
     
     ~Application();
 };
