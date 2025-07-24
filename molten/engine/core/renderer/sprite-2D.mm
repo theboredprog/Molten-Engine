@@ -27,11 +27,11 @@
 #include "../utils/log-macros.hpp"
 
 Sprite2D::Sprite2D(simd::float2 position,
-                   simd::float2 scale,
+                   simd::float2 size,
                    float rotation,
                    const char* filepath)
     : m_Position(position), m_Color{1.0f, 1.0f, 1.0f, 1.0f},
-      m_Scale(scale), m_Rotation(rotation), m_Texture(nullptr),
+      m_Size(size), m_Rotation(rotation), m_Texture(nullptr),
       m_VertexData(new VertexData2D[6])
 {
     if (filepath && *filepath != '\0')
@@ -42,11 +42,11 @@ Sprite2D::Sprite2D(simd::float2 position,
 
 Sprite2D::Sprite2D(simd::float2 position,
                    simd::float4 color,
-                   simd::float2 scale,
+                   simd::float2 size,
                    float rotation,
                    const char* filepath)
     : m_Position(position), m_Color(color),
-      m_Scale(scale), m_Rotation(rotation), m_Texture(nullptr),
+      m_Size(size), m_Rotation(rotation), m_Texture(nullptr),
       m_VertexData(new VertexData2D[6])
 {
     if (filepath && *filepath != '\0')
@@ -88,8 +88,8 @@ void Sprite2D::CreateVertexData()
         float rotatedY = posOffsets[i].x * sinAngle + posOffsets[i].y * cosAngle;
 
         // Scale and translate to position
-        float finalX = m_Position.x + rotatedX * m_Scale.x;
-        float finalY = m_Position.y + rotatedY * m_Scale.y;
+        float finalX = m_Position.x + rotatedX * m_Size.x;
+        float finalY = m_Position.y + rotatedY * m_Size.y;
 
         m_VertexData[i].position = simd::float3{finalX, finalY, 0.0f};
         m_VertexData[i].texCoord = texCoords[i];

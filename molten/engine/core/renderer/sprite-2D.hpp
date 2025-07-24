@@ -34,7 +34,7 @@ private:
     
     simd::float2 m_Position;
     simd::float4 m_Color;
-    simd::float2 m_Scale;
+    simd::float2 m_Size;
     
     float m_Rotation;
     
@@ -46,19 +46,19 @@ private:
 public:
     
     explicit Sprite2D(simd::float2 position,
-             simd::float2 scale = {100.0f, 100.0f},
+             simd::float2 size = {100.0f, 100.0f},
              float rotation = 0.0f,
              const char* filepath = nullptr);
 
     explicit Sprite2D(simd::float2 position,
              simd::float4 color,
-             simd::float2 scale = {100.0f, 100.0f},
+             simd::float2 size = {100.0f, 100.0f},
              float rotation = 0.0f,
              const char* filepath = nullptr);
 
     void SetId(unsigned int id) { m_Id = id; }
     void SetPosition(const simd::float2& pos) { m_Position = pos; CreateVertexData(); }
-    void SetScale(const simd::float2& scale) { m_Scale = scale; CreateVertexData(); }
+    void SetSize(const simd::float2& size) { m_Size = size; CreateVertexData(); }
     void SetRotation(float radians) { m_Rotation = radians; CreateVertexData(); }
     void SetColor(const simd::float4& color) { m_Color = color; CreateVertexData(); }
 
@@ -66,6 +66,8 @@ public:
     
     simd::float2 GetPosition() const { return m_Position; }
     simd::float4 GetColor() const { return m_Color; }
+    simd::float2 GetSize() const { return m_Size; }
+    float GetRotation() const { return m_Rotation; }
 
     Texture2D* GetTexture() const { return m_Texture; }
     const VertexData2D* GetData() const { return m_VertexData; }

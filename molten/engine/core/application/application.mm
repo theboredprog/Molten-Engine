@@ -26,8 +26,10 @@
 
 #include "application.hpp"
 #include "../renderer/renderer-2D.hpp"
+#include "../renderer/batch-renderer-2D.hpp"
 #include "window.hpp"
 #include "../utils/logger.hpp"
+
 #include "../utils/log-macros.hpp"
 
 Application::Application(unsigned int width, unsigned int height, const char* title)
@@ -36,41 +38,37 @@ Application::Application(unsigned int width, unsigned int height, const char* ti
     Logger::Init();
     
     m_Renderer2D = new Renderer2D(m_Window);
-}
-
-bool Application::Init()
-{
-    return true;
+    m_BatchRenderer2D = new BatchRenderer2D(m_Window);
 }
 
 void Application::Run()
 {
-    m_Renderer2D->PrepareRenderingData();
-
-        while (m_Window->isOpen())
+    while (m_Window->isOpen())
+    {
+        @autoreleasepool
         {
-            @autoreleasepool
+            int width, height;
+            glfwGetWindowSize(m_Window->GetInternalWindow(), &width, &height);
+
+            if (width != m_LastWidth || height != m_LastHeight)
             {
-                int width, height;
-                glfwGetWindowSize(m_Window->GetInternalWindow(), &width, &height);
-
-                if (width != m_LastWidth || height != m_LastHeight)
-                {
-                    m_LastWidth = width;
-                    m_LastHeight = height;
-                    m_Renderer2D->UpdateProjMatrix(width,height);
-                }
-
-                m_Renderer2D->IssueRenderCall();
+                m_LastWidth = width;
+                m_LastHeight = height;
+                m_BatchRenderer2D->UpdateProjMatrix(width, height); // you still need this method
             }
 
-            m_Window->HandleInputEvents();
+            // Just flush the renderer, it does the full rendering pass now
+            m_BatchRenderer2D->Flush();
         }
+
+        m_Window->HandleInputEvents();
+    }
 }
 
 Application::~Application()
 {
     if (m_Renderer2D) delete m_Renderer2D;
+    if (m_BatchRenderer2D) delete m_BatchRenderer2D;
     
     if(m_Window) delete m_Window;
 }

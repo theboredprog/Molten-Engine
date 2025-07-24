@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3E0AE5922E31075D00137C9C /* sprite-2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E0AE5912E31075800137C9C /* sprite-2D.mm */; };
 		3E2D1DAC2E314E51002F6589 /* molten.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E2D1DAB2E314E4C002F6589 /* molten.hpp */; };
+		3E58A1922E31AC6300D10456 /* batch-renderer-2D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E58A1912E31AC5800D10456 /* batch-renderer-2D.hpp */; };
+		3E58A1942E31AC9D00D10456 /* batch-renderer-2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E58A1932E31AC9900D10456 /* batch-renderer-2D.mm */; };
 		3E9419A52E3128ED00C260B0 /* vertex-data-2D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3E9419A42E3128ED00C260B0 /* vertex-data-2D.hpp */; };
 		3E97DE5A2E3168D20076A552 /* sprite-2D.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3E97DE562E3168D20076A552 /* sprite-2D.metal */; };
 		3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EB6742A2E2FD2C800B7049D /* window.hpp */; };
@@ -60,6 +62,8 @@
 		3E0AE5912E31075800137C9C /* sprite-2D.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "sprite-2D.mm"; sourceTree = "<group>"; };
 		3E0AE5A22E311C7C00137C9C /* texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture.png; sourceTree = "<group>"; };
 		3E2D1DAB2E314E4C002F6589 /* molten.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = molten.hpp; sourceTree = "<group>"; };
+		3E58A1912E31AC5800D10456 /* batch-renderer-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "batch-renderer-2D.hpp"; sourceTree = "<group>"; };
+		3E58A1932E31AC9900D10456 /* batch-renderer-2D.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "batch-renderer-2D.mm"; sourceTree = "<group>"; };
 		3E9419A42E3128ED00C260B0 /* vertex-data-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "vertex-data-2D.hpp"; sourceTree = "<group>"; };
 		3E97DE562E3168D20076A552 /* sprite-2D.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "sprite-2D.metal"; sourceTree = "<group>"; };
 		3EB6742A2E2FD2C800B7049D /* window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = window.hpp; sourceTree = "<group>"; };
@@ -178,6 +182,8 @@
 		3EDC0AE82E2F70EE00A33DAE /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				3E58A1932E31AC9900D10456 /* batch-renderer-2D.mm */,
+				3E58A1912E31AC5800D10456 /* batch-renderer-2D.hpp */,
 				3E0AE5912E31075800137C9C /* sprite-2D.mm */,
 				3ED275E32E30DFB7008F51BA /* sprite-2D.hpp */,
 				3ED275E12E30D440008F51BA /* texture-2D.mm */,
@@ -232,6 +238,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E58A1922E31AC6300D10456 /* batch-renderer-2D.hpp in Headers */,
 				3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */,
 				3ED275E02E30D3C1008F51BA /* texture-2D.hpp in Headers */,
 				3E2D1DAC2E314E51002F6589 /* molten.hpp in Headers */,
@@ -335,6 +342,7 @@
 				3EDC0BB12E2F822D00A33DAE /* application.mm in Sources */,
 				3EB6742F2E2FD4C800B7049D /* window.mm in Sources */,
 				3EDC0BB22E2F822D00A33DAE /* renderer-2D.mm in Sources */,
+				3E58A1942E31AC9D00D10456 /* batch-renderer-2D.mm in Sources */,
 				3EDC0BB32E2F822D00A33DAE /* mtl_implementation.mm in Sources */,
 				3ED275E22E30D448008F51BA /* texture-2D.mm in Sources */,
 				3E0AE5922E31075D00137C9C /* sprite-2D.mm in Sources */,

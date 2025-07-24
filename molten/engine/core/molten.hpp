@@ -22,6 +22,7 @@
 
 #include "application/application.hpp"
 #include "renderer/renderer-2D.hpp"
+#include "renderer/batch-renderer-2D.hpp"
 
 #define LOG_CLIENT
 #include "utils/log-macros.hpp"

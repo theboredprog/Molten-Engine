@@ -29,4 +29,5 @@ struct VertexData2D
     simd::float3 position;
     simd::float2 texCoord;
     simd::float4 color;
+    float textureIndex;
 };
