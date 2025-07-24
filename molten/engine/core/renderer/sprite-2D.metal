@@ -17,7 +17,7 @@ struct VertexOut {
     float4 color;
 };
 
-vertex VertexOut vertexShader(VertexIn in [[stage_in]],
+vertex VertexOut spriteVertexShader(VertexIn in [[stage_in]],
                               constant Uniforms& uniforms [[buffer(1)]])
 {
     VertexOut out;
@@ -28,7 +28,7 @@ vertex VertexOut vertexShader(VertexIn in [[stage_in]],
     return out;
 }
 
-fragment float4 fragmentShader(VertexOut in [[stage_in]],
+fragment float4 spriteFragmentShader(VertexOut in [[stage_in]],
                                texture2d<float> spriteTexture [[texture(0)]],
                                sampler spriteSampler [[sampler(0)]])
 {

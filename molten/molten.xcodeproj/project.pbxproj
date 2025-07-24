@@ -12,6 +12,7 @@
 		3E97DE5A2E3168D20076A552 /* sprite-2D.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3E97DE562E3168D20076A552 /* sprite-2D.metal */; };
 		3EB6742B2E2FD2CD00B7049D /* window.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EB6742A2E2FD2C800B7049D /* window.h */; };
 		3EB6742F2E2FD4C800B7049D /* window.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EB6742E2E2FD4C400B7049D /* window.mm */; };
+		3EC98C5B2E32AE2A00FA2A7D /* test-shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3EC98C5A2E32AD8700FA2A7D /* test-shader.metal */; };
 		3ED275E02E30D3C1008F51BA /* texture-2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3ED275DF2E30D3BD008F51BA /* texture-2D.h */; };
 		3ED275E22E30D448008F51BA /* texture-2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ED275E12E30D440008F51BA /* texture-2D.cpp */; };
 		3ED275E42E30DFBE008F51BA /* sprite-2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 3ED275E32E30DFB7008F51BA /* sprite-2D.h */; };
@@ -69,6 +70,7 @@
 		3E97DE562E3168D20076A552 /* sprite-2D.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "sprite-2D.metal"; sourceTree = "<group>"; };
 		3EB6742A2E2FD2C800B7049D /* window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
 		3EB6742E2E2FD4C400B7049D /* window.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = window.mm; sourceTree = "<group>"; };
+		3EC98C5A2E32AD8700FA2A7D /* test-shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = "test-shader.metal"; sourceTree = "<group>"; };
 		3ED275DF2E30D3BD008F51BA /* texture-2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "texture-2D.h"; sourceTree = "<group>"; };
 		3ED275E12E30D440008F51BA /* texture-2D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "texture-2D.cpp"; sourceTree = "<group>"; };
 		3ED275E32E30DFB7008F51BA /* sprite-2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sprite-2D.h"; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 		3E0AE5A32E311C7C00137C9C /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				3EC98C5A2E32AD8700FA2A7D /* test-shader.metal */,
 				3E0AE5A22E311C7C00137C9C /* texture.png */,
 			);
 			path = assets;
@@ -368,6 +371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E97DE5A2E3168D20076A552 /* sprite-2D.metal in Sources */,
+				3EC98C5B2E32AE2A00FA2A7D /* test-shader.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +510,7 @@
 					"$(PROJECT_DIR)/third_party/glfw/include",
 					"$(PROJECT_DIR)/third_party/metal-cpp",
 					"$(PROJECT_DIR)/third_party/spdlog/include",
+					"$(PROJECT_DIR)/third_party/",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -525,6 +530,7 @@
 					"$(PROJECT_DIR)/third_party/glfw/include",
 					"$(PROJECT_DIR)/third_party/metal-cpp",
 					"$(PROJECT_DIR)/third_party/spdlog/include",
+					"$(PROJECT_DIR)/third_party/",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -542,6 +548,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/engine/core/**",
 					"$(PROJECT_DIR)/third_party/spdlog/include",
+					"$(PROJECT_DIR)/third_party/glfw/include",
+					"$(PROJECT_DIR)/third_party/metal-cpp",
+					"$(PROJECT_DIR)/third_party/",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -554,6 +563,9 @@
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/engine/core/**",
 					"$(PROJECT_DIR)/third_party/spdlog/include",
+					"$(PROJECT_DIR)/third_party/glfw/include",
+					"$(PROJECT_DIR)/third_party/metal-cpp",
+					"$(PROJECT_DIR)/third_party/",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

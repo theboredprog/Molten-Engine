@@ -183,8 +183,8 @@ void Renderer2D::PrepareRenderingData()
     m_MetalCommandQueue = device->newCommandQueue();
     if (!m_MetalCommandQueue) { LOG_CORE_ERROR("Failed to create Metal command queue."); return; }
 
-    auto vertexShader = m_MetalDefaultLibrary->newFunction(NS::String::string("vertexShader", NS::UTF8StringEncoding));
-    auto fragmentShader = m_MetalDefaultLibrary->newFunction(NS::String::string("fragmentShader", NS::UTF8StringEncoding));
+    auto vertexShader = m_MetalDefaultLibrary->newFunction(NS::String::string("spriteVertexShader", NS::UTF8StringEncoding));
+    auto fragmentShader = m_MetalDefaultLibrary->newFunction(NS::String::string("spriteFragmentShader", NS::UTF8StringEncoding));
 
     if (!vertexShader || !fragmentShader) { LOG_CORE_ERROR("Shader function not found in Metal library."); return; }
 
