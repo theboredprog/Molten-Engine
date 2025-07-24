@@ -194,7 +194,7 @@ void Renderer2D::PrepareRenderingData()
     pipelineDescriptor->setLabel(NS::String::string("2D Rendering Pipeline", NS::ASCIIStringEncoding));
     pipelineDescriptor->setVertexFunction(vertexShader);
     pipelineDescriptor->setFragmentFunction(fragmentShader);
-
+    
     auto pixelFormat = (MTL::PixelFormat)m_Window->GetMetalLayer()->pixelFormat();
     pipelineDescriptor->colorAttachments()->object(0)->setPixelFormat(pixelFormat);
     
