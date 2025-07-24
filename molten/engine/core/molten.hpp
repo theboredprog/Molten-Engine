@@ -24,26 +24,31 @@
 #include "renderer/renderer-2D.hpp"
 #include "renderer/sprite-2D.hpp"
 #include "application/game.hpp"
+#include "application/input.hpp"
 
 #define LOG_CLIENT
 #include "utils/log-macros.hpp"
 
-//TODO: fix this batch renderer color thing. please.
-//TODO: organize this better - it's a mess to make a game like this, interacting with the renderer directly etc managing the app etc..
+//TODO: batch 2d sprites - make a decent 2d renderer - right now it's the most inefficent thing ever, reconstructing vertex data every frame; Ideally it would take all sprites in at once, create a spritesheet with all the images, gather all the data, make a huge buffer, send it to the gpu for drawing and only update this buffer when we want to change the positions of the sprites in the game - this keeps everything on the screen with only a single draw call, with minimal overhead.
+
+//TODO: cleanup the code and comment on how it works - it's a mess rn.
 //TODO: turn radians to degrees - much more understandable
-//TODO: batch 2d sprites - make a decent 2d renderer (this also includes creating the data directly in the renderer, not the sprite)
 //TODO: be able to use 2D spritesheets, specify index and get the appropriate texture.
+//TODO: 2D blending (alpha blending)
+//TODO: 2D depth sorting
 //TODO: 2D animations
 //TODO: 2D phisics
 //TODO: entity component system
-//TODO: scripting with c++ api
 //TODO: audio
 //TODO: make simple 2d game
-//TODO: 3D model importing
-//TODO: phisically based rendering
-//TODO: simple fx
-//TODO: 3D phisics
+//TODO: 3D model reading and importing
+//TODO: 3D phisically based rendering
+//TODO: user interface
 //TODO: gizmos
-//TODO: editor
+//TODO: simple fx (gaussian blur, hdr, bloom, ssao, antialiasing)
+//TODO: 3D phisics
+//TODO: custom editor
 //TODO: properly exporting and packaging
 //TODO: raytracing/pathtracing
+//TODO: custom ui
+//TODO: custom maths lib

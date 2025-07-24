@@ -20,30 +20,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-class Application;
-class Renderer2D;
-
 #pragma once
 
-class Game
+#include "keycode.hpp"
+
+#include <unordered_map>
+
+class GLFWwindow;
+
+class Input
 {
-protected:
-    Application* m_Application = nullptr;
-    
 public:
+    static void Initialize(GLFWwindow* window);
+
+    static void Update(); // To be called every frame
+
+    static bool GetKeyDown(Keycode key);
+    static bool GetKeyUp(Keycode key);
+    static bool GetKeyHeld(Keycode key);
+
+private:
+    static GLFWwindow* s_Window;
+
+    // Key states tracked per frame
+    static std::unordered_map<int, bool> s_KeysDown;
+    static std::unordered_map<int, bool> s_KeysUp;
+    static std::unordered_map<int, bool> s_KeysHeld;
     
-    virtual ~Game() = default;
-    
-    void SetApplication(Application* app) { m_Application = app; }
-    
-    Renderer2D* GetRenderer() const;
-    
-    // Called once at startup
-    virtual void OnStart() = 0;
-    
-    // Called every frame, dt in seconds
-    virtual void OnUpdate(float dt) = 0;
-    
-    // Called before shutdown
-    virtual void OnShutdown() = 0;
+    static int MapKeycodeToGLFW(Keycode key);
+
+    // Internal callback from GLFW
+    static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };

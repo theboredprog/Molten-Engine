@@ -34,6 +34,10 @@
 		3EEF6FF12E323FB10067FE5D /* renderer-2D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EEF6FF02E323FB10067FE5D /* renderer-2D.hpp */; };
 		3EEF6FF72E3243DB0067FE5D /* renderer-2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF6FF62E3243D70067FE5D /* renderer-2D.mm */; };
 		3EEF6FF92E3243EE0067FE5D /* vertex-data-2D.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EEF6FF82E3243E90067FE5D /* vertex-data-2D.hpp */; };
+		3EEF6FFB2E32557E0067FE5D /* game.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF6FFA2E32557A0067FE5D /* game.mm */; };
+		3EEF6FFD2E32564D0067FE5D /* input.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EEF6FFC2E3256490067FE5D /* input.hpp */; };
+		3EEF6FFF2E3256620067FE5D /* input.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF6FFE2E3256600067FE5D /* input.mm */; };
+		3EEF70012E3257250067FE5D /* keycode.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3EEF70002E3257220067FE5D /* keycode.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +87,10 @@
 		3EEF6FF02E323FB10067FE5D /* renderer-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "renderer-2D.hpp"; sourceTree = "<group>"; };
 		3EEF6FF62E3243D70067FE5D /* renderer-2D.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "renderer-2D.mm"; sourceTree = "<group>"; };
 		3EEF6FF82E3243E90067FE5D /* vertex-data-2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "vertex-data-2D.hpp"; sourceTree = "<group>"; };
+		3EEF6FFA2E32557A0067FE5D /* game.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = game.mm; sourceTree = "<group>"; };
+		3EEF6FFC2E3256490067FE5D /* input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = input.hpp; sourceTree = "<group>"; };
+		3EEF6FFE2E3256600067FE5D /* input.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = input.mm; sourceTree = "<group>"; };
+		3EEF70002E3257220067FE5D /* keycode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = keycode.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -170,6 +178,10 @@
 		3EDC0AE22E2F70EE00A33DAE /* application */ = {
 			isa = PBXGroup;
 			children = (
+				3EEF70002E3257220067FE5D /* keycode.hpp */,
+				3EEF6FFE2E3256600067FE5D /* input.mm */,
+				3EEF6FFC2E3256490067FE5D /* input.hpp */,
+				3EEF6FFA2E32557A0067FE5D /* game.mm */,
 				3EEF6FEE2E3238F30067FE5D /* game.hpp */,
 				3EB6742E2E2FD4C400B7049D /* window.mm */,
 				3EB6742A2E2FD2C800B7049D /* window.hpp */,
@@ -237,6 +249,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EEF6FF12E323FB10067FE5D /* renderer-2D.hpp in Headers */,
+				3EEF6FFD2E32564D0067FE5D /* input.hpp in Headers */,
+				3EEF70012E3257250067FE5D /* keycode.hpp in Headers */,
 				3EEF6FF92E3243EE0067FE5D /* vertex-data-2D.hpp in Headers */,
 				3EEF6FEF2E3238F60067FE5D /* game.hpp in Headers */,
 				3EB6742B2E2FD2CD00B7049D /* window.hpp in Headers */,
@@ -339,6 +353,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EDC0BB12E2F822D00A33DAE /* application.mm in Sources */,
+				3EEF6FFB2E32557E0067FE5D /* game.mm in Sources */,
+				3EEF6FFF2E3256620067FE5D /* input.mm in Sources */,
 				3EEF6FF72E3243DB0067FE5D /* renderer-2D.mm in Sources */,
 				3EB6742F2E2FD4C800B7049D /* window.mm in Sources */,
 				3EDC0BB32E2F822D00A33DAE /* mtl_implementation.mm in Sources */,

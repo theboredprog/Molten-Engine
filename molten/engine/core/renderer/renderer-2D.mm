@@ -20,6 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include "renderer-2D.hpp"
+
 #include <random>
 #include <algorithm>
 #include <unordered_set>
@@ -27,7 +29,6 @@
 #include <Metal/Metal.hpp>
 #include <QuartzCore/CAMetalLayer.hpp>
 
-#include "renderer-2D.hpp"
 #include "../application/window.hpp"
 #include "vertex-data-2D.hpp"
 #include "../utils/log-macros.hpp"
@@ -314,8 +315,6 @@ void Renderer2D::IssueRenderCall()
         m_MetalCommandBuffer->presentDrawable(m_MetalDrawable);
         m_MetalCommandBuffer->commit();
 
-        // TODO: stalls the cpu to wait for the gpu = very bad for performance.
-        // good for debugging tho, so keep this for now, remove for optimization stage.
         m_MetalCommandBuffer->waitUntilCompleted();
 
         renderPassDescriptor->release();

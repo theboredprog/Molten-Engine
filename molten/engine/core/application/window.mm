@@ -20,6 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include "window.hpp"
+
 #define GLFW_INCLUDE_NONE
 #import <GLFW/glfw3.h>
 
@@ -32,10 +34,9 @@
 #include <QuartzCore/CAMetalLayer.h>
 #include <QuartzCore/CAMetalLayer.hpp>
 
-#include "window.hpp"
-
 #include "../utils/log-macros.hpp"
 #include "application.hpp"
+#include "input.hpp"
 
 void glfwErrorCallback(int error, const char* description)
 {
@@ -124,6 +125,7 @@ bool Window::isOpen()
 void Window::HandleInputEvents()
 {
     glfwPollEvents();
+    Input::Update();
 }
 
 void Window::Close()

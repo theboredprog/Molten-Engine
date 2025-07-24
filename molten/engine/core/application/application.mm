@@ -20,11 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include "application.hpp"
+
 #include <simd/simd.h>
 
 #include <GLFW/glfw3.h>
 
-#include "application.hpp"
 #include "window.hpp"
 #include "../utils/logger.hpp"
 
@@ -34,9 +35,13 @@
 
 #include "game.hpp"
 
+#include "input.hpp"
+
 Application::Application(unsigned int width, unsigned int height, const char* title, Game* game)
 : m_Window(new Window(width, height, title)), m_Game(game)
 {
+    Input::Initialize(m_Window->GetInternalWindow());
+    
     Logger::Init();
     
     m_Renderer = new Renderer2D(m_Window);
@@ -54,6 +59,7 @@ void Application::Run()
     while (m_Window->isOpen())
     {
         m_Window->HandleInputEvents();
+        m_Renderer->PrepareRenderingData();
         
         double currentTime = glfwGetTime();
         float deltaTime = static_cast<float>(currentTime - lastTime);

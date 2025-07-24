@@ -20,30 +20,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-class Application;
-class Renderer2D;
+#include "game.hpp"
 
-#pragma once
+#include "../utils/log-macros.hpp"
+#include "application.hpp"
 
-class Game
+Renderer2D* Game::GetRenderer() const
 {
-protected:
-    Application* m_Application = nullptr;
-    
-public:
-    
-    virtual ~Game() = default;
-    
-    void SetApplication(Application* app) { m_Application = app; }
-    
-    Renderer2D* GetRenderer() const;
-    
-    // Called once at startup
-    virtual void OnStart() = 0;
-    
-    // Called every frame, dt in seconds
-    virtual void OnUpdate(float dt) = 0;
-    
-    // Called before shutdown
-    virtual void OnShutdown() = 0;
-};
+    CORE_ASSERT(m_Application, "Game has no Application instance");
+    return m_Application ? m_Application->GetRenderer2D() : nullptr;
+}

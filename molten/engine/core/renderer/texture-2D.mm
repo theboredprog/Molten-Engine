@@ -15,10 +15,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include "texture-2D.hpp"
+
 #include <Metal/Metal.hpp>
 
 #include "../utils/image.hpp"
-#include "texture-2D.hpp"
 #include "../utils/log-macros.hpp"
 
 Texture2D::Texture2D(const char* filepath)
